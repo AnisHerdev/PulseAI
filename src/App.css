@@ -251,3 +251,695 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ============================================================
+   RCM MODULE STYLES — Revenue Cycle Management
+   ============================================================ */
+
+.rcm-page {
+  max-width: 1400px;
+}
+
+/* Section titles */
+.rcm-section-title-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+  margin-top: 8px;
+}
+
+.rcm-section-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.rcm-section-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ---- KPI Cards ---- */
+.rcm-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.rcm-kpi-card {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-top-width: 3px;
+  border-radius: 12px;
+  padding: 18px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  cursor: default;
+}
+
+.rcm-kpi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.rcm-kpi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rcm-kpi-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+}
+
+.rcm-kpi-icon-wrap {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rcm-kpi-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin: 4px 0 2px;
+}
+
+.rcm-kpi-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rcm-kpi-trend {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rcm-kpi-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* ---- Pipeline ---- */
+.rcm-pipeline-card {
+  margin-bottom: 32px;
+}
+
+.rcm-pipeline-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 8px 0 4px;
+}
+
+.rcm-pipeline-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 110px;
+}
+
+.rcm-pipeline-ring-wrap {
+  flex-shrink: 0;
+}
+
+.rcm-pipeline-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.3;
+}
+
+.rcm-pipeline-count {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.rcm-pipeline-amount {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.rcm-pipeline-arrow {
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+/* ---- Claims Analytics ---- */
+.rcm-claims-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.rcm-donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.rcm-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.rcm-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.rcm-legend-item strong {
+  margin-left: auto;
+  font-weight: 700;
+}
+
+.rcm-approval-time-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.rcm-approval-time-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0 8px;
+  gap: 4px;
+}
+
+.rcm-approval-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(245, 158, 11, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.rcm-approval-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.rcm-approval-value span {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.rcm-payer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 12px;
+}
+
+.rcm-payer-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.rcm-payer-row strong {
+  color: var(--text-primary);
+}
+
+/* ---- Denial Insights ---- */
+.rcm-denial-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.rcm-denial-reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rcm-denial-reason-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rcm-denial-reason-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rcm-denial-reason-label {
+  font-size: 12px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.rcm-denial-reason-count {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.rcm-denial-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: var(--border-color);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.rcm-denial-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.rcm-denial-pct {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+/* ---- RCM Table ---- */
+.rcm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.rcm-table th {
+  text-align: left;
+  padding: 8px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.rcm-table td {
+  padding: 10px 10px;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.rcm-table tr:last-child td {
+  border-bottom: none;
+}
+
+.rcm-table tr:hover td {
+  background: var(--surface-hover);
+}
+
+.rcm-status-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid;
+}
+
+/* ---- AR Aging ---- */
+.rcm-ar-grid {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 32px;
+  align-items: flex-start;
+}
+
+.rcm-ar-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  min-width: 220px;
+}
+
+.rcm-ar-total-card {}
+
+.rcm-aging-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 13px;
+}
+
+.rcm-aging-row:last-child {
+  border-bottom: none;
+}
+
+.rcm-aging-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.rcm-aging-bucket {
+  flex: 1;
+  color: var(--text-secondary);
+}
+
+.rcm-aging-amount {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.rcm-aging-pct {
+  font-size: 12px;
+  color: var(--text-secondary);
+  width: 36px;
+  text-align: right;
+}
+
+/* ---- Alerts ---- */
+.rcm-alerts-card {
+  flex: 1;
+}
+
+.rcm-alerts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.rcm-alerts-counts {
+  display: flex;
+  gap: 8px;
+}
+
+.rcm-alert-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.rcm-alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.rcm-alerts-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.rcm-alerts-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rcm-alerts-list::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 2px;
+}
+
+.rcm-alert-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border-left: 3px solid;
+  transition: opacity 0.2s;
+}
+
+.rcm-alert-icon-wrap {
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.rcm-alert-blink {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  animation: rcm-blink 1.4s ease-in-out infinite;
+}
+
+@keyframes rcm-blink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.3; transform: scale(0.7); }
+}
+
+.rcm-alert-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.rcm-alert-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.rcm-alert-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.rcm-alert-time {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.rcm-alert-detail {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ---- Bottom grid (alerts + AI) ---- */
+.rcm-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+/* ---- AI Summary ---- */
+.rcm-ai-card {
+  background: linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(37,99,235,0.06) 50%, rgba(16,185,129,0.04) 100%);
+  border: 1px solid rgba(99,102,241,0.25);
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rcm-ai-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.rcm-ai-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(129,140,248,0.15);
+  border: 1px solid rgba(129,140,248,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rcm-ai-badge {
+  font-size: 14px;
+  font-weight: 700;
+  color: #818cf8;
+  letter-spacing: 0.02em;
+}
+
+.rcm-ai-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.rcm-ai-headline {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  font-weight: 500;
+  margin: 0;
+  padding: 14px 16px;
+  background: rgba(129,140,248,0.06);
+  border-radius: 10px;
+  border-left: 3px solid #818cf8;
+}
+
+.rcm-ai-body {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+}
+
+.rcm-ai-section-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.rcm-ai-insights {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rcm-ai-insight-item {
+  display: flex;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.rcm-ai-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rcm-ai-action-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.rcm-ai-action-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(245,158,11,0.2);
+  color: #f59e0b;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---- RCM Tooltip ---- */
+.rcm-tooltip {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 1280px) {
+  .rcm-kpi-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .rcm-claims-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .rcm-claims-grid > :last-child {
+    grid-column: 1 / -1;
+  }
+  .rcm-denial-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .rcm-denial-grid > :last-child {
+    grid-column: 1 / -1;
+  }
+  .rcm-ai-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .rcm-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .rcm-claims-grid,
+  .rcm-denial-grid {
+    grid-template-columns: 1fr;
+  }
+  .rcm-ar-grid {
+    flex-direction: column;
+  }
+  .rcm-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+  .rcm-pipeline-row {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

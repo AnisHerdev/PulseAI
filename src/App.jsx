@@ -13,6 +13,7 @@ import {
   TrendingDown,
   DollarSign
 } from 'lucide-react';
+import RCMPage from './components/rcm/RCMPage';
 import { 
   BarChart, 
   Bar, 
@@ -347,8 +348,10 @@ function App() {
         {activeTab === 'dashboard' && <CommandCenter />}
         {activeTab === 'kpi' && <KPIOverview />}
         
+        {activeTab === 'rcm' && <RCMPage />}
+
         {/* Placeholder for other tabs */}
-        {['rcm', 'partners', 'reports'].includes(activeTab) && (
+        {['partners', 'reports'].includes(activeTab) && (
           <div className="content-wrapper">
             <div className="card">
               <p style={{ color: 'var(--text-secondary)' }}>This module is currently under development.</p>
