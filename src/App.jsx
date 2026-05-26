@@ -1,4 +1,32 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { 
+  LayoutDashboard, 
+  Activity, 
+  RefreshCcw, 
+  Users, 
+  FileBarChart, 
+  ArrowUpRight, 
+  ArrowDownRight, 
+  AlertCircle, 
+  Clock, 
+  TrendingUp, 
+  TrendingDown,
+  DollarSign
+} from 'lucide-react';
+import RCMPage from './components/rcm/RCMPage';
+import { 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  Tooltip, 
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line
+} from 'recharts';
 import './App.css';
 
 // --- DYNAMIC PAGE REGISTRATION ---
@@ -66,9 +94,10 @@ function App() {
           <h2 className="header-title">{activeTitle}</h2>
         </header>
         
-        {ActiveComponent ? (
-          <ActiveComponent setActiveTab={setActiveTab} />
-        ) : (
+        {activeTab === 'rcm' && <RCMPage />}
+
+        {/* Placeholder for other tabs */}
+        {['partners', 'reports'].includes(activeTab) && (
           <div className="content-wrapper">
             <div className="card">
               <p style={{ color: 'var(--text-secondary)' }}>No pages found.</p>
