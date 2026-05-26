@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { 
   ArrowDownRight, 
   AlertCircle, 
@@ -84,7 +84,7 @@ const KPIOverview = () => {
   );
 };
 
-export const config = {
+KPIOverview.config = {
   id: 'kpi',
   label: 'KPI Overview',
   title: 'Operational KPI Overview',

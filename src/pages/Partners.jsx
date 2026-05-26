@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Users } from 'lucide-react';
 
 const Partners = () => {
@@ -17,7 +17,7 @@ const Partners = () => {
   );
 };
 
-export const config = {
+Partners.config = {
   id: 'partners',
   label: 'Third-Party Partners',
   title: 'Third-Party Partners',

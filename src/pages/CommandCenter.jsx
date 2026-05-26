@@ -1,7 +1,6 @@
-import React from 'react';
+
 import { 
   ArrowUpRight, 
-  ArrowDownRight, 
   AlertCircle, 
   Clock, 
   TrendingUp, 
@@ -21,31 +20,15 @@ import {
   LineChart,
   Line
 } from 'recharts';
+import { TODAY_METRICS, REVENUE_BY_DEPT, PAYER_MIX, FINANCIAL_DATA_7D } from '../utils/constants';
 
-// --- MOCK DATA ---
-const revenueByDeptData = [
-  { name: 'Cardiology', revenue: 240000 },
-  { name: 'Orthopedics', revenue: 190000 },
-  { name: 'Oncology', revenue: 150000 },
-  { name: 'Surgery', revenue: 110000 },
-  { name: 'Emergency', revenue: 80000 },
-];
-
-const payerMixData = [
-  { name: 'Private Insurance', value: 55, color: '#2563eb' },
-  { name: 'Self-Pay', value: 25, color: '#10b981' },
-  { name: 'Govt Scheme', value: 20, color: '#f59e0b' },
-];
-
-const correlationData = [
-  { day: 'Mon', occ: 82, rev: 800 },
-  { day: 'Tue', occ: 85, rev: 840 },
-  { day: 'Wed', occ: 88, rev: 860 },
-  { day: 'Thu', occ: 90, rev: 890 },
-  { day: 'Fri', occ: 92, rev: 810 }, // Divergence here
-  { day: 'Sat', occ: 90, rev: 780 },
-  { day: 'Sun', occ: 85, rev: 750 },
-];
+// Occupancy vs Revenue mapping derived dynamically from ground truth
+const occupancies = [88, 90, 92, 90, 85, 82, 85];
+const correlationData = FINANCIAL_DATA_7D.map((d, index) => ({
+  day: d.day,
+  occ: occupancies[index] || 85,
+  rev: d.revenue / 10 // Scales 8452 (from constants.js) to 845.2 to fit the "k" (thousands) chart scale
+}));
 
 const CommandCenter = ({ setActiveTab }) => {
   return (
@@ -54,23 +37,23 @@ const CommandCenter = ({ setActiveTab }) => {
       <div className="row-1-grid">
         <div className="card clickable-card" onClick={() => setActiveTab('financial-details')}>
           <h2 className="card-title">Today's Revenue</h2>
-          <div className="hero-number">$845,200</div>
+          <div className="hero-number">${TODAY_METRICS.revenue.toLocaleString()}</div>
           <p className="sub-label status-green">
-            <ArrowUpRight size={16} /> +5.2% vs same day last week
+            <ArrowUpRight size={16} /> {TODAY_METRICS.revenueDiff} vs same day last week
           </p>
         </div>
         <div className="card clickable-card" onClick={() => setActiveTab('financial-details')}>
           <h2 className="card-title">Today's Expenses</h2>
-          <div className="hero-number">$612,400</div>
+          <div className="hero-number">${TODAY_METRICS.expenses.toLocaleString()}</div>
           <p className="sub-label status-amber">
-            <Clock size={16} /> Estimated (Staffing + Consumables)
+            <Clock size={16} /> Estimated ({TODAY_METRICS.expensesEstimate})
           </p>
         </div>
         <div className="card clickable-card" onClick={() => setActiveTab('financial-details')}>
           <h2 className="card-title">Net P&L Today</h2>
-          <div className="hero-number status-green">+$232,800</div>
+          <div className="hero-number status-green">+${TODAY_METRICS.netPL.toLocaleString()}</div>
           <p className="sub-label status-green">
-            <ArrowUpRight size={16} /> +12.4% vs same day last week
+            <ArrowUpRight size={16} /> {TODAY_METRICS.netPLDiff} vs same day last week
           </p>
         </div>
       </div>
@@ -79,24 +62,24 @@ const CommandCenter = ({ setActiveTab }) => {
       <div className="row-2-grid">
         <div className="card">
           <h2 className="card-title">Patient Direct Payments</h2>
-          <div className="metric-number">$185,944</div>
-          <p className="sub-label">22% of total inflow</p>
+          <div className="metric-number">${TODAY_METRICS.directPayments.toLocaleString()}</div>
+          <p className="sub-label">{TODAY_METRICS.directPaymentsPct} of total inflow</p>
         </div>
         <div className="card">
           <h2 className="card-title">Insurance / TPA</h2>
-          <div className="metric-number">$659,256</div>
-          <p className="sub-label">78% of total inflow</p>
+          <div className="metric-number">${TODAY_METRICS.insurancePayments.toLocaleString()}</div>
+          <p className="sub-label">{TODAY_METRICS.insurancePaymentsPct} of total inflow</p>
         </div>
         <div className="card" style={{ borderColor: 'var(--color-amber)' }}>
           <h2 className="card-title">Pending Claims</h2>
-          <div className="metric-number status-amber">$4.25M</div>
+          <div className="metric-number status-amber">${(TODAY_METRICS.pendingClaims / 1000000).toFixed(2)}M</div>
           <p className="sub-label">Submitted, unpaid value</p>
         </div>
         <div className="card" style={{ borderColor: 'var(--color-red)' }}>
           <h2 className="card-title">Claim Denials Today</h2>
-          <div className="metric-number status-red">$18,400</div>
+          <div className="metric-number status-red">${TODAY_METRICS.claimDenialsToday.toLocaleString()}</div>
           <p className="sub-label status-red">
-            <AlertCircle size={16} /> 14 claims denied
+            <AlertCircle size={16} /> {TODAY_METRICS.claimDenialsCount} claims denied
           </p>
         </div>
       </div>
@@ -107,7 +90,7 @@ const CommandCenter = ({ setActiveTab }) => {
           <h2 className="card-title">Revenue by Department (Top 5)</h2>
           <div style={{ width: '100%', height: 200 }}>
             <ResponsiveContainer>
-              <BarChart data={revenueByDeptData} layout="vertical" margin={{ top: 0, right: 0, left: 20, bottom: 0 }}>
+              <BarChart data={REVENUE_BY_DEPT} layout="vertical" margin={{ top: 0, right: 0, left: 20, bottom: 0 }}>
                 <XAxis type="number" hide />
                 <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} width={80} style={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
                 <Tooltip cursor={{fill: 'var(--surface-hover)'}} formatter={(val) => `$${val.toLocaleString()}`} />
@@ -122,8 +105,8 @@ const CommandCenter = ({ setActiveTab }) => {
           <div style={{ width: '100%', height: 160 }}>
             <ResponsiveContainer>
               <PieChart>
-                <Pie data={payerMixData} innerRadius={50} outerRadius={70} paddingAngle={2} dataKey="value" stroke="none">
-                  {payerMixData.map((entry, index) => (
+                <Pie data={PAYER_MIX} innerRadius={50} outerRadius={70} paddingAngle={2} dataKey="value" stroke="none">
+                  {PAYER_MIX.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
@@ -205,7 +188,7 @@ const CommandCenter = ({ setActiveTab }) => {
   );
 };
 
-export const config = {
+CommandCenter.config = {
   id: 'dashboard',
   label: 'Dashboard',
   title: 'Business Command Center',
