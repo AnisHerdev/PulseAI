@@ -1,4 +1,31 @@
 import React, { useState } from 'react';
+import { 
+  LayoutDashboard, 
+  Activity, 
+  RefreshCcw, 
+  Users, 
+  FileBarChart, 
+  ArrowUpRight, 
+  ArrowDownRight, 
+  AlertCircle, 
+  Clock, 
+  TrendingUp, 
+  TrendingDown,
+  DollarSign
+} from 'lucide-react';
+import { 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  Tooltip, 
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line
+} from 'recharts';
 import './App.css';
 
 // --- DYNAMIC PAGE REGISTRATION ---
@@ -8,13 +35,14 @@ const pageModules = import.meta.glob('./pages/*.jsx', { eager: true });
 const pages = Object.keys(pageModules)
   .map((path) => {
     const mod = pageModules[path];
-    if (!mod.config || !mod.default) {
-      console.warn(`Page component at ${path} is missing static config or default export.`);
+    const component = mod.default;
+    if (!component || !component.config) {
+      console.warn(`Page component at ${path} is missing static config on its default export.`);
       return null;
     }
     return {
-      ...mod.config,
-      component: mod.default,
+      ...component.config,
+      component,
     };
   })
   .filter(Boolean)

@@ -345,7 +345,7 @@ const Partners = ({ setActiveTab }) => {
   );
 };
 
-export const config = {
+Partners.config = {
   id: 'partners',
   label: 'Third-Party Partners',
   title: 'Third-Party Partners',
