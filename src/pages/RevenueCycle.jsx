@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { RefreshCcw } from 'lucide-react';
 
 const RevenueCycle = () => {
@@ -17,7 +17,7 @@ const RevenueCycle = () => {
   );
 };
 
-export const config = {
+RevenueCycle.config = {
   id: 'rcm',
   label: 'Revenue Cycle',
   title: 'Revenue Cycle Management',

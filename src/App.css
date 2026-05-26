@@ -121,6 +121,17 @@
   letter-spacing: 0.05em;
 }
 
+.clickable-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.clickable-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -4px rgba(0, 0, 0, 0.06);
+  border-color: var(--primary-color);
+}
+
 /* Typography */
 .hero-number {
   font-size: 48px;

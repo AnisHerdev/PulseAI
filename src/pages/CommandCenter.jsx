@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { 
   ArrowUpRight, 
-  ArrowDownRight, 
   AlertCircle, 
   Clock, 
   TrendingUp, 
@@ -75,7 +74,7 @@ const CommandCenter = () => {
 
       {/* ROW 1: P&L Strip */}
       <div className="row-1-grid">
-        <div className="card">
+        <div className="card clickable-card" onClick={() => setActiveTab('financial-details')}>
           <h2 className="card-title">Today's Revenue</h2>
           <div className="hero-number">{formatCurrency(d.todaysRevenue.value)}</div>
           <p className={`sub-label ${d.todaysRevenue.changePercent >= 0 ? 'status-green' : 'status-red'}`}>
@@ -83,14 +82,14 @@ const CommandCenter = () => {
             {d.todaysRevenue.changePercent >= 0 ? '+' : ''}{d.todaysRevenue.changePercent.toFixed(1)}% vs same day last week
           </p>
         </div>
-        <div className="card">
+        <div className="card clickable-card" onClick={() => setActiveTab('financial-details')}>
           <h2 className="card-title">Today's Expenses</h2>
           <div className="hero-number">{formatCurrency(d.todaysExpenses.value)}</div>
           <p className="sub-label status-amber">
-            <Clock size={16} /> Estimated (Staffing + Consumables)
+            <Clock size={16} /> Estimated ({TODAY_METRICS.expensesEstimate})
           </p>
         </div>
-        <div className="card">
+        <div className="card clickable-card" onClick={() => setActiveTab('financial-details')}>
           <h2 className="card-title">Net P&L Today</h2>
           <div className={`hero-number ${d.netPnL.value >= 0 ? 'status-green' : 'status-red'}`}>
             {d.netPnL.value >= 0 ? '+' : ''}{formatCurrency(d.netPnL.value)}
@@ -279,7 +278,7 @@ const CommandCenter = () => {
   );
 };
 
-export const config = {
+CommandCenter.config = {
   id: 'dashboard',
   label: 'Dashboard',
   title: 'Business Command Center',
