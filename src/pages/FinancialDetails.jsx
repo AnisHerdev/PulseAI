@@ -226,6 +226,8 @@ const FinancialDetails = () => {
                   onMouseMove={(state) => {
                     if (state && state.activeTooltipIndex !== undefined) {
                       setActiveIndex(state.activeTooltipIndex);
+                    } else {
+                      setActiveIndex(-1);
                     }
                   }}
                   onMouseLeave={() => setActiveIndex(-1)}
@@ -251,8 +253,9 @@ const FinancialDetails = () => {
                     {activeData.map((entry, index) => (
                       <Cell 
                         key={`cell-revenue-${index}`} 
-                        fill={activeIndex === -1 || activeIndex === index ? COLORS.revenue : COLORS.inactive} 
-                        style={{ transition: 'fill 0.2s ease' }}
+                        fill={COLORS.revenue} 
+                        opacity={activeIndex === -1 || activeIndex === index ? 1 : 0.35}
+                        style={{ transition: 'opacity 0.2s ease' }}
                       />
                     ))}
                   </Bar>
@@ -260,8 +263,9 @@ const FinancialDetails = () => {
                     {activeData.map((entry, index) => (
                       <Cell 
                         key={`cell-expenses-${index}`} 
-                        fill={activeIndex === -1 || activeIndex === index ? COLORS.expenses : COLORS.inactive}
-                        style={{ transition: 'fill 0.2s ease' }} 
+                        fill={COLORS.expenses}
+                        opacity={activeIndex === -1 || activeIndex === index ? 1 : 0.35}
+                        style={{ transition: 'opacity 0.2s ease' }} 
                       />
                     ))}
                   </Bar>
