@@ -1,3 +1,4 @@
+/* eslint-env node */
 /**
  * server/index.js
  *
@@ -37,7 +38,6 @@ const GROQ_API_KEYS = (process.env.GROQ_API_KEYS || '')
   .map((k) => k.trim())
   .filter(Boolean);
 
-const GROQ_TEST_MODEL = process.env.GROQ_TEST_MODEL || 'llama-3.1-8b-instant';
 const GROQ_SUMMARY_MODEL = process.env.GROQ_SUMMARY_MODEL || 'llama-3.3-70b-versatile';
 const GROQ_DEFAULT_MODEL = process.env.GROQ_DEFAULT_MODEL || 'llama-3.1-8b-instant';
 const GROQ_USE_70B = (process.env.GROQ_USE_70B || 'false').toLowerCase() === 'true';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   RefreshCw,
   Star,
@@ -7,8 +7,6 @@ import {
   Bot,
   ThumbsUp,
   ThumbsDown,
-  AlertTriangle,
-  TrendingUp,
   Clock,
 } from 'lucide-react';
 import { useReviewStream } from '../hooks/useReviewStream.js';
@@ -45,7 +43,7 @@ const PatientFeedback = () => {
 
   // Force re-render of timeAgo labels
   const [, setTick] = useState(0);
-  React.useEffect(() => {
+  useEffect(() => {
     const id = setInterval(() => setTick((t) => t + 1), 5000);
     return () => clearInterval(id);
   }, []);
@@ -276,7 +274,7 @@ const PatientFeedback = () => {
   );
 };
 
-export const config = {
+PatientFeedback.config = {
   id: 'feedback',
   label: 'Patient Feedback',
   title: 'Patient Feedback Intelligence',

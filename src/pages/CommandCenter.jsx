@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { 
   ArrowUpRight, 
+  ArrowDownRight,
   AlertCircle, 
   Clock, 
   TrendingUp, 
@@ -23,6 +24,7 @@ import {
   Line
 } from 'recharts';
 import { useDashboardStream } from '../hooks/useDashboardStream.js';
+import { TODAY_METRICS } from '../utils/constants.js';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -50,7 +52,7 @@ function getAlertIcon(alert) {
 
 // ── Component ────────────────────────────────────────────────────────────────
 
-const CommandCenter = () => {
+const CommandCenter = ({ setActiveTab }) => {
   const { dashboardData, alerts, aiSummary, lastUpdate, refreshSummary } = useDashboardStream();
 
   // Destructure for readability
