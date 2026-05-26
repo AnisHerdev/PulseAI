@@ -60,53 +60,53 @@ const PatientFeedback = () => {
         <span className="live-timestamp">Last review: {timeAgo(lastReviewTime)}</span>
       </div>
 
-      {/* ROW 1: Summary Stats */}
-      <div className="fb-stats-row">
-        <div className="card fb-stat-card">
-          <div className="fb-stat-icon-wrap fb-stat-blue">
-            <MessageSquare size={20} />
+      {/* ROW 1: Summary Stats Executive Strip */}
+      <section className="fb-executive-strip" aria-label="Feedback summary metrics">
+        <div className="fb-strip-item">
+          <div className="fb-strip-icon-wrap fb-stat-blue">
+            <MessageSquare size={16} />
           </div>
-          <div className="fb-stat-content">
-            <span className="fb-stat-value">{aggregates.totalReviews}</span>
-            <span className="fb-stat-label">Total Reviews</span>
-          </div>
-        </div>
-        <div className="card fb-stat-card">
-          <div className="fb-stat-icon-wrap fb-stat-amber">
-            <Star size={20} />
-          </div>
-          <div className="fb-stat-content">
-            <span className="fb-stat-value">{aggregates.averageRating.toFixed(1)}</span>
-            <span className="fb-stat-label">Avg Rating</span>
+          <div className="fb-strip-content">
+            <div className="fb-strip-value">{aggregates.totalReviews}</div>
+            <span className="fb-strip-label">Total Reviews</span>
           </div>
         </div>
-        <div className="card fb-stat-card">
-          <div className="fb-stat-icon-wrap fb-stat-green">
-            <ThumbsUp size={20} />
+        <div className="fb-strip-item">
+          <div className="fb-strip-icon-wrap fb-stat-amber">
+            <Star size={16} />
           </div>
-          <div className="fb-stat-content">
-            <span className="fb-stat-value status-green">{highCount}</span>
-            <span className="fb-stat-label">Positive (4-5★)</span>
-          </div>
-        </div>
-        <div className="card fb-stat-card">
-          <div className="fb-stat-icon-wrap fb-stat-red">
-            <ThumbsDown size={20} />
-          </div>
-          <div className="fb-stat-content">
-            <span className="fb-stat-value status-red">{lowMidCount}</span>
-            <span className="fb-stat-label">Low / Mid (1-3★)</span>
+          <div className="fb-strip-content">
+            <div className="fb-strip-value">{aggregates.averageRating.toFixed(1)}</div>
+            <span className="fb-strip-label">Avg Rating</span>
           </div>
         </div>
-      </div>
+        <div className="fb-strip-item">
+          <div className="fb-strip-icon-wrap fb-stat-green">
+            <ThumbsUp size={16} />
+          </div>
+          <div className="fb-strip-content">
+            <div className="fb-strip-value status-green">{highCount}</div>
+            <span className="fb-strip-label">Positive (4-5★)</span>
+          </div>
+        </div>
+        <div className="fb-strip-item">
+          <div className="fb-strip-icon-wrap fb-stat-red">
+            <ThumbsDown size={16} />
+          </div>
+          <div className="fb-strip-content">
+            <div className="fb-strip-value status-red">{lowMidCount}</div>
+            <span className="fb-strip-label">Low / Mid (1-3★)</span>
+          </div>
+        </div>
+      </section>
 
-      {/* ROW 2: AI Pain-Point Summary + Rating Distribution */}
-      <div className="fb-row-2">
+      {/* ROW 2: AI Summary + Rating Distribution (Cardless) */}
+      <div className="fb-row-distilled">
         {/* AI Review Summary */}
-        <div className="card review-summary-card">
-          <div className="card-header-row">
-            <h2 className="card-title">
-              <Bot size={16} className="card-title-icon" /> AI Pain-Point Summary
+        <div className="fb-ai-section">
+          <div className="fb-section-header">
+            <h2 className="fb-section-title">
+              <Bot size={16} className="fb-title-icon theme-primary" /> AI Pain-Point Summary
             </h2>
             <button
               className="refresh-btn"
@@ -117,12 +117,14 @@ const PatientFeedback = () => {
               <RefreshCw size={14} className={reviewSummary.loading ? 'spin' : ''} />
             </button>
           </div>
-          <p className="ai-summary-text">
-            {reviewSummary.loading && !reviewSummary.summary
-              ? 'Analyzing patient feedback...'
-              : reviewSummary.summary || 'Collecting reviews — summary will appear after enough feedback is gathered...'}
+          <p className="fb-ai-text">
+            {reviewSummary.loading && !reviewSummary.summary ? (
+              <span className="ai-loading-pulse">Analyzing patient feedback...</span>
+            ) : (
+              reviewSummary.summary || 'Collecting reviews — summary will appear after enough feedback is gathered...'
+            )}
           </p>
-          <div className="summary-footer">
+          <div className="fb-summary-footer">
             <span className="timestamp-label">
               {reviewSummary.timestamp ? `Generated ${timeAgo(reviewSummary.timestamp)}` : 'Pending'}
             </span>
@@ -135,24 +137,24 @@ const PatientFeedback = () => {
         </div>
 
         {/* Rating Distribution */}
-        <div className="card">
-          <h2 className="card-title">
-            <Star size={16} className="card-title-icon" /> Rating Distribution
+        <div className="fb-distribution-section">
+          <h2 className="fb-section-title">
+            <Star size={16} className="fb-title-icon theme-amber" /> Rating Distribution
           </h2>
-          <div className="rating-bar-container" style={{ marginTop: '4px' }}>
+          <div className="rating-bar-container" style={{ marginTop: '12px' }}>
             {[5, 4, 3, 2, 1].map((star) => {
               const count = aggregates.ratingCounts[star] || 0;
               const pct = aggregates.totalReviews > 0 ? (count / aggregates.totalReviews) * 100 : 0;
               return (
                 <div key={star} className="rating-bar-row" style={{ padding: '4px 0' }}>
                   <span className="rating-bar-label">{star}★</span>
-                  <div className="rating-bar-track" style={{ height: '12px' }}>
+                  <div className="rating-bar-track" style={{ height: '6px', borderRadius: '3px' }}>
                     <div
                       className={`rating-bar-fill-inner ${star >= 4 ? 'bar-green' : star === 3 ? 'bar-amber' : 'bar-red'}`}
-                      style={{ width: `${pct}%` }}
+                      style={{ width: `${pct}%`, borderRadius: '3px' }}
                     />
                   </div>
-                  <span className="rating-bar-count" style={{ width: '48px' }}>
+                  <span className="rating-bar-count" style={{ width: '56px', fontSize: '12px', fontVariantNumeric: 'tabular-nums' }}>
                     {count} ({pct.toFixed(0)}%)
                   </span>
                 </div>
@@ -161,7 +163,7 @@ const PatientFeedback = () => {
           </div>
 
           {/* Department Breakdown */}
-          <h3 className="fb-subsection-title">By Department</h3>
+          <h3 className="fb-dept-breakdown-title">By Department</h3>
           <div className="fb-dept-chips">
             {Object.entries(aggregates.departmentCounts || {})
               .sort(([, a], [, b]) => b - a)
@@ -178,97 +180,97 @@ const PatientFeedback = () => {
         </div>
       </div>
 
-      {/* ROW 3: Staff Feedback Mentions Table */}
-      <div className="section-divider">
-        <Users size={18} />
-        <span>Patient Feedback Mentions</span>
-      </div>
-
-      <div className="card mentions-card fb-mentions-full">
-        <div className="card-header-row" style={{ marginBottom: '4px' }}>
-          <p className="fb-mentions-subtitle">
-            Staff referenced in patient reviews — labeled as mentions, not performance evaluations.
-          </p>
-        </div>
-        {staffReports.length > 0 ? (
-          <div className="mentions-table-wrapper">
-            <table className="mentions-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Role</th>
-                  <th>Department</th>
-                  <th style={{ textAlign: 'center' }}>
-                    <ThumbsUp size={12} style={{ verticalAlign: 'middle' }} /> Positive
-                  </th>
-                  <th style={{ textAlign: 'center' }}>
-                    <ThumbsDown size={12} style={{ verticalAlign: 'middle' }} /> Negative
-                  </th>
-                  <th style={{ textAlign: 'center' }}>Avg ★</th>
-                  <th>Signal</th>
-                </tr>
-              </thead>
-              <tbody>
-                {staffReports.map((s) => (
-                  <tr key={s.staff_id}>
-                    <td className="cell-name">{s.name}</td>
-                    <td>{s.role}</td>
-                    <td>{s.department}</td>
-                    <td className="cell-count status-green">{s.positive_mentions}</td>
-                    <td className="cell-count status-red">{s.negative_mentions}</td>
-                    <td className="cell-count">{s.average_rating_when_mentioned.toFixed(1)}</td>
-                    <td>
-                      <span className={`signal-badge ${getSignalClass(s.signal)}`}>
-                        {s.signal}
-                      </span>
-                    </td>
+      {/* BOTTOM SECTION: Mentions & Reviews Side-by-Side (Distilled Layout) */}
+      <div className="fb-bottom-grid">
+        {/* Left Column: Mentions */}
+        <div className="fb-mentions-column">
+          <div className="fb-mentions-header">
+            <h2 className="fb-section-title" style={{ marginBottom: '4px' }}>
+              <Users size={16} className="fb-title-icon theme-primary" /> Patient Feedback Mentions
+            </h2>
+            <p className="fb-mentions-subtitle" style={{ margin: 0 }}>
+              Staff referenced in patient reviews — labeled as mentions, not performance evaluations.
+            </p>
+          </div>
+          {staffReports.length > 0 ? (
+            <div className="mentions-table-wrapper" style={{ border: '1px solid var(--border-color)', borderRadius: '12px', overflow: 'hidden' }}>
+              <table className="mentions-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Department</th>
+                    <th style={{ textAlign: 'center' }}>
+                      <ThumbsUp size={12} style={{ verticalAlign: 'middle' }} /> Positive
+                    </th>
+                    <th style={{ textAlign: 'center' }}>
+                      <ThumbsDown size={12} style={{ verticalAlign: 'middle' }} /> Negative
+                    </th>
+                    <th style={{ textAlign: 'center' }}>Avg ★</th>
+                    <th>Signal</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="fb-empty-state">
-            <Clock size={32} style={{ color: 'var(--text-tertiary)' }} />
-            <p>Collecting review data for mention analysis...</p>
-          </div>
-        )}
-      </div>
-
-      {/* ROW 4: Recent Reviews Feed */}
-      <div className="section-divider">
-        <MessageSquare size={18} />
-        <span>Recent Reviews</span>
-      </div>
-
-      <div className="fb-reviews-feed">
-        {reviews.slice(0, 15).map((r) => (
-          <div key={r.id} className="card fb-review-card">
-            <div className="fb-review-header">
-              <div className="fb-review-stars">
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <Star
-                    key={s}
-                    size={14}
-                    fill={s <= r.rating ? getStarColor(r.rating) : 'transparent'}
-                    stroke={s <= r.rating ? getStarColor(r.rating) : 'var(--text-tertiary)'}
-                  />
-                ))}
-              </div>
-              <span className="fb-review-meta">{r.department} · {r.visit_type}</span>
-              <span className="fb-review-time">{timeAgo(r.timestamp)}</span>
+                </thead>
+                <tbody>
+                  {staffReports.map((s) => (
+                    <tr key={s.staff_id}>
+                      <td className="cell-name">{s.name}</td>
+                      <td>{s.role}</td>
+                      <td>{s.department}</td>
+                      <td className="cell-count status-green">{s.positive_mentions}</td>
+                      <td className="cell-count status-red">{s.negative_mentions}</td>
+                      <td className="cell-count">{s.average_rating_when_mentioned.toFixed(1)}</td>
+                      <td>
+                        <span className={`signal-badge ${getSignalClass(s.signal)}`}>
+                          {s.signal}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-            <p className="fb-review-text">{r.feedback_text}</p>
-          </div>
-        ))}
-        {reviews.length === 0 && (
-          <div className="card">
+          ) : (
             <div className="fb-empty-state">
-              <MessageSquare size={32} style={{ color: 'var(--text-tertiary)' }} />
-              <p>Waiting for first review...</p>
+              <Clock size={32} style={{ color: 'var(--text-tertiary)' }} />
+              <p>Collecting review data for mention analysis...</p>
             </div>
+          )}
+        </div>
+
+        {/* Right Column: Reviews Feed */}
+        <div className="fb-reviews-column">
+          <h2 className="fb-section-title" style={{ marginBottom: 'var(--space-lg)' }}>
+            <MessageSquare size={16} className="fb-title-icon theme-primary" /> Recent Reviews Feed
+          </h2>
+
+          <div className="fb-reviews-timeline">
+            {reviews.slice(0, 15).map((r) => (
+              <div key={r.id} className="fb-timeline-item">
+                <div className="fb-timeline-header">
+                  <div className="fb-review-stars">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <Star
+                        key={s}
+                        size={12}
+                        fill={s <= r.rating ? getStarColor(r.rating) : 'transparent'}
+                        stroke={s <= r.rating ? getStarColor(r.rating) : 'var(--text-tertiary)'}
+                      />
+                    ))}
+                  </div>
+                  <span className="fb-timeline-meta">{r.department} · {r.visit_type}</span>
+                  <span className="fb-timeline-time">{timeAgo(r.timestamp)}</span>
+                </div>
+                <p className="fb-timeline-text">{r.feedback_text}</p>
+              </div>
+            ))}
+            {reviews.length === 0 && (
+              <div className="fb-empty-state">
+                <MessageSquare size={32} style={{ color: 'var(--text-tertiary)' }} />
+                <p>Waiting for first review...</p>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

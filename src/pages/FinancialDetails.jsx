@@ -24,6 +24,7 @@ const COLORS = {
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
+    const netProfit = data.revenue * 100 - Math.abs(data.expenses * 100);
     return (
       <div style={{
         backgroundColor: 'var(--surface-color)',
@@ -51,6 +52,25 @@ const CustomTooltip = ({ active, payload }) => {
               Expenses
             </span>
             <span style={{ fontWeight: 600 }}>${Math.abs(data.expenses * 100).toLocaleString()}</span>
+          </div>
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            fontSize: '14px',
+            borderTop: '1px solid var(--border-color)',
+            paddingTop: '8px',
+            marginTop: '4px'
+          }}>
+            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
+              {netProfit >= 0 ? 'Profit' : 'Loss'}
+            </span>
+            <span style={{ 
+              fontWeight: 700, 
+              color: netProfit >= 0 ? 'var(--color-green)' : 'var(--color-red)' 
+            }}>
+              {netProfit >= 0 ? `+$${netProfit.toLocaleString()}` : `-$${Math.abs(netProfit).toLocaleString()}`}
+            </span>
           </div>
         </div>
       </div>
@@ -105,18 +125,18 @@ const FinancialDetails = () => {
 
   return (
     <div className="content-wrapper">
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '32px', alignItems: 'start' }}>
+      <div className="fd-top-grid">
         
-        {/* Main Chart Card */}
-        <div className="card" style={{ padding: '32px' }}>
+        {/* Main Chart Section */}
+        <div className="fd-chart-section">
           
           {/* Chart Header Row */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '40px' }}>
+          <div className="fd-chart-header">
             <div>
-              <div style={{ fontSize: '42px', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1 }}>
+              <div className="fd-chart-balance">
                 ${savedBalance.toLocaleString()}
               </div>
-              <div style={{ fontSize: '14px', color: 'var(--text-secondary)', marginTop: '8px' }}>
+              <div className="fd-chart-sub">
                 {isDaySelected 
                   ? `Selected Day Net Profit (${activeData[selectedDayIndex].day})` 
                   : `Net Balance (${timeframe === '7d' ? '7 Days' : '30 Days'})`}
@@ -124,65 +144,28 @@ const FinancialDetails = () => {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '16px' }}>
-              <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <div className="fd-controls-row">
                 
                 {/* Timeframe selector dropdown */}
-                <div style={{ position: 'relative' }}>
+                <div className="fd-dropdown-container">
                   <button 
                     onClick={() => setShowDropdown(!showDropdown)}
-                    style={{ 
-                      display: 'flex', alignItems: 'center', gap: '6px', 
-                      padding: '6px 12px', borderRadius: '6px', 
-                      border: '1px solid var(--border-color)', background: 'var(--surface-color)',
-                      color: 'var(--text-primary)', fontSize: '14px', cursor: 'pointer',
-                      fontWeight: 500, transition: 'all 0.2s ease'
-                    }}
+                    className="fd-dropdown-btn"
                   >
                     {timeframe === '7d' ? '7 Days' : '30 Days'} <ChevronDown size={14} />
                   </button>
                   
                   {showDropdown && (
-                    <div style={{
-                      position: 'absolute',
-                      top: 'calc(100% + 4px)',
-                      right: 0,
-                      backgroundColor: 'var(--surface-color)',
-                      border: '1px solid var(--border-color)',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                      zIndex: 100,
-                      minWidth: '100px',
-                      overflow: 'hidden'
-                    }}>
+                    <div className="fd-dropdown-menu">
                       <button 
                         onClick={() => handleTimeframeChange('7d')}
-                        style={{
-                          width: '100%',
-                          padding: '8px 12px',
-                          border: 'none',
-                          background: timeframe === '7d' ? 'var(--surface-hover)' : 'transparent',
-                          color: timeframe === '7d' ? 'var(--primary-color)' : 'var(--text-primary)',
-                          textAlign: 'left',
-                          cursor: 'pointer',
-                          fontSize: '13px',
-                          fontWeight: 500
-                        }}
+                        className={`fd-dropdown-item ${timeframe === '7d' ? 'active' : ''}`}
                       >
                         7 Days
                       </button>
                       <button 
                         onClick={() => handleTimeframeChange('30d')}
-                        style={{
-                          width: '100%',
-                          padding: '8px 12px',
-                          border: 'none',
-                          background: timeframe === '30d' ? 'var(--surface-hover)' : 'transparent',
-                          color: timeframe === '30d' ? 'var(--primary-color)' : 'var(--text-primary)',
-                          textAlign: 'left',
-                          cursor: 'pointer',
-                          fontSize: '13px',
-                          fontWeight: 500
-                        }}
+                        className={`fd-dropdown-item ${timeframe === '30d' ? 'active' : ''}`}
                       >
                         30 Days
                       </button>
@@ -191,31 +174,17 @@ const FinancialDetails = () => {
                 </div>
 
                 {/* Chart Toggle button group */}
-                <div style={{ 
-                  display: 'flex', 
-                  border: '1px solid var(--border-color)', borderRadius: '6px', 
-                  padding: '2px', background: 'var(--surface-color)'
-                }}>
+                <div className="fd-toggle-group">
                   <button 
                     onClick={() => setChartType('bar')}
-                    style={{ 
-                      padding: '4px 8px', borderRadius: '4px', border: 'none', 
-                      background: chartType === 'bar' ? 'var(--surface-hover)' : 'transparent', 
-                      color: chartType === 'bar' ? 'var(--primary-color)' : 'var(--text-tertiary)', 
-                      cursor: 'pointer', display: 'flex', alignItems: 'center', transition: 'all 0.2s'
-                    }}
+                    className={`fd-toggle-btn ${chartType === 'bar' ? 'active' : ''}`}
                     title="Bar Chart"
                   >
                     <BarChart2 size={16} />
                   </button>
                   <button 
                     onClick={() => setChartType('line')}
-                    style={{ 
-                      padding: '4px 8px', borderRadius: '4px', border: 'none', 
-                      background: chartType === 'line' ? 'var(--surface-hover)' : 'transparent', 
-                      color: chartType === 'line' ? 'var(--primary-color)' : 'var(--text-tertiary)', 
-                      cursor: 'pointer', display: 'flex', alignItems: 'center', transition: 'all 0.2s'
-                    }}
+                    className={`fd-toggle-btn ${chartType === 'line' ? 'active' : ''}`}
                     title="Line Chart"
                   >
                     <TrendingUp size={16} />
@@ -224,13 +193,13 @@ const FinancialDetails = () => {
               </div>
 
               {/* Legends */}
-              <div style={{ display: 'flex', gap: '16px', fontSize: '13px', color: 'var(--text-secondary)' }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ width: '8px', height: '8px', backgroundColor: COLORS.revenue, borderRadius: '2px' }}></span>
+              <div className="fd-legend-row">
+                <span className="fd-legend-item">
+                  <span className="fd-legend-dot revenue"></span>
                   Revenue
                 </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ width: '8px', height: '8px', backgroundColor: COLORS.expenses, borderRadius: '2px' }}></span>
+                <span className="fd-legend-item">
+                  <span className="fd-legend-dot expenses"></span>
                   Expenses
                 </span>
               </div>
@@ -245,14 +214,6 @@ const FinancialDetails = () => {
                   data={activeData} 
                   margin={{ top: 20, right: 0, left: -10, bottom: 0 }}
                   barSize={timeframe === '7d' ? 48 : 16}
-                  onMouseMove={(state) => {
-                    if (state && state.activeTooltipIndex !== undefined) {
-                      setActiveIndex(state.activeTooltipIndex);
-                    } else {
-                      setActiveIndex(-1);
-                    }
-                  }}
-                  onMouseLeave={() => setActiveIndex(-1)}
                   onClick={(state) => {
                     if (state && state.activeTooltipIndex !== undefined) {
                       setSelectedDayIndex(selectedDayIndex === state.activeTooltipIndex ? -1 : state.activeTooltipIndex);
@@ -284,6 +245,8 @@ const FinancialDetails = () => {
                         fill={COLORS.revenue} 
                         opacity={highlightIndex === -1 || highlightIndex === index ? 1 : 0.35}
                         style={{ transition: 'opacity 0.2s ease' }}
+                        onMouseEnter={() => setActiveIndex(index)}
+                        onMouseLeave={() => setActiveIndex(-1)}
                       />
                     ))}
                   </Bar>
@@ -294,6 +257,8 @@ const FinancialDetails = () => {
                         fill={COLORS.expenses}
                         opacity={highlightIndex === -1 || highlightIndex === index ? 1 : 0.35}
                         style={{ transition: 'opacity 0.2s ease' }} 
+                        onMouseEnter={() => setActiveIndex(index)}
+                        onMouseLeave={() => setActiveIndex(-1)}
                       />
                     ))}
                   </Bar>
@@ -358,61 +323,48 @@ const FinancialDetails = () => {
         </div>
 
         {/* Right Sidebar Stats - Linked dynamically to computed timeframe summaries or selected day */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', paddingTop: '16px' }}>
+        <div className="fd-sidebar">
           {isDaySelected && (
             <button 
               onClick={() => setSelectedDayIndex(-1)}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                color: 'var(--primary-color)',
-                fontSize: '12px',
-                fontWeight: 600,
-                textAlign: 'left',
-                cursor: 'pointer',
-                padding: 0,
-                marginTop: '-8px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px'
-              }}
+              className="fd-sidebar-reset-btn"
             >
               ← Reset to totals
             </button>
           )}
 
-          <div>
-            <div style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', fontWeight: 500 }}>
+          <div className="fd-sidebar-item">
+            <div className="fd-sidebar-label">
               {revenueLabel}
             </div>
-            <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px', lineHeight: 1 }}>
+            <div className="fd-sidebar-value">
               ${totalRevenue.toLocaleString()}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '13px', color: isDaySelected ? 'var(--text-secondary)' : 'var(--color-green)' }}>
+            <div className="fd-sidebar-trend" style={{ color: isDaySelected ? 'var(--text-secondary)' : 'var(--color-green)' }}>
               {isDaySelected ? <Calendar size={14} /> : <ArrowUpRight size={14} />} {revenueDiffText}
             </div>
           </div>
 
-          <div>
-            <div style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', fontWeight: 500 }}>
+          <div className="fd-sidebar-item">
+            <div className="fd-sidebar-label">
               {expensesLabel}
             </div>
-            <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px', lineHeight: 1 }}>
+            <div className="fd-sidebar-value">
               ${totalExpenses.toLocaleString()}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '13px', color: isDaySelected ? 'var(--text-secondary)' : 'var(--color-amber)' }}>
+            <div className="fd-sidebar-trend" style={{ color: isDaySelected ? 'var(--text-secondary)' : 'var(--color-amber)' }}>
               {isDaySelected ? <Calendar size={14} /> : <ArrowUpRight size={14} />} {expensesDiffText}
             </div>
           </div>
 
-          <div>
-            <div style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', fontWeight: 500 }}>
+          <div className="fd-sidebar-item">
+            <div className="fd-sidebar-label">
               {netLabel}
             </div>
-            <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px', lineHeight: 1 }}>
+            <div className="fd-sidebar-value">
               ${savedBalance.toLocaleString()}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '13px', color: isDaySelected ? 'var(--text-secondary)' : 'var(--color-green)' }}>
+            <div className="fd-sidebar-trend" style={{ color: isDaySelected ? 'var(--text-secondary)' : 'var(--color-green)' }}>
               {isDaySelected ? <Calendar size={14} /> : <ArrowUpRight size={14} />} {netDiffText}
             </div>
           </div>
@@ -420,11 +372,11 @@ const FinancialDetails = () => {
 
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '32px', marginTop: '32px' }}>
+      <div className="fd-bottom-grid">
         
         {/* Cash Flow Projection */}
-        <div className="card">
-          <h2 className="card-title" style={{ marginBottom: '24px' }}>Cash Flow Projection (30 Days)</h2>
+        <div className="fd-cash-flow-section">
+          <h2 className="fd-section-title">Cash Flow Projection (30 Days)</h2>
           <div style={{ width: '100%', height: 300 }}>
             <ResponsiveContainer>
               <LineChart data={CASH_FLOW_PROJECTION} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
@@ -445,33 +397,29 @@ const FinancialDetails = () => {
         </div>
 
         {/* Vendor Payments Status */}
-        <div className="card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-            <h2 className="card-title" style={{ margin: 0 }}>Vendor Payments</h2>
+        <div className="fd-vendor-section">
+          <div className="fd-vendor-header-row">
+            <h2 className="fd-section-title" style={{ margin: 0 }}>Vendor Payments</h2>
             <button style={{ background: 'transparent', border: 'none', color: 'var(--primary-color)', fontSize: '13px', cursor: 'pointer', fontWeight: 500 }}>View All</button>
           </div>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div className="fd-vendor-list">
             {[
               { vendor: 'McKesson Medical', amount: '$42,500', status: 'Pending', statusColor: 'var(--color-amber)', date: 'Due in 2 days' },
               { vendor: 'GE Healthcare', amount: '$18,200', status: 'Overdue', statusColor: 'var(--color-red)', date: '3 days overdue' },
               { vendor: 'Cerner Systems', amount: '$12,400', status: 'Scheduled', statusColor: 'var(--text-secondary)', date: 'Due in 5 days' },
               { vendor: 'Local Linen Supply', amount: '$3,800', status: 'Pending', statusColor: 'var(--color-amber)', date: 'Due tomorrow' }
             ].map((payment, i) => (
-              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '16px', borderBottom: i === 3 ? 'none' : '1px solid var(--border-color)' }}>
+              <div key={i} className="fd-vendor-item">
                 <div>
-                  <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '14px', marginBottom: '4px' }}>{payment.vendor}</div>
-                  <div style={{ fontSize: '12px', color: 'var(--text-tertiary)' }}>{payment.date}</div>
+                  <div className="fd-vendor-name">{payment.vendor}</div>
+                  <div className="fd-vendor-date">{payment.date}</div>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
-                  <div style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{payment.amount}</div>
-                  <div style={{ 
-                    fontSize: '11px', 
-                    fontWeight: 600, 
+                  <div className="fd-vendor-amount">{payment.amount}</div>
+                  <div className="fd-vendor-status" style={{ 
                     color: payment.statusColor,
                     backgroundColor: payment.status === 'Overdue' ? 'var(--color-red-bg)' : payment.status === 'Pending' ? 'var(--color-amber-bg)' : 'var(--surface-hover)',
-                    padding: '2px 8px',
-                    borderRadius: '12px'
                   }}>
                     {payment.status}
                   </div>
@@ -494,3 +442,4 @@ FinancialDetails.config = {
 };
 
 export default FinancialDetails;
+

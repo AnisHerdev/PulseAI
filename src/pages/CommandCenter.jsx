@@ -141,6 +141,40 @@ const CommandCenter = ({ setActiveTab }) => {
               </div>
             </div>
           </div>
+
+          {/* AI Command Summary */}
+          <div className="card ai-summary-card distilled-ai-card">
+            <div className="card-header-row">
+              <h2 className="card-title">
+                <Bot size={16} className="card-title-icon" /> AI Command Summary
+              </h2>
+              <button
+                className="refresh-btn"
+                onClick={refreshSummary}
+                disabled={aiSummary.loading}
+                title="Refresh AI Summary"
+              >
+                <RefreshCw size={14} className={aiSummary.loading ? 'spin' : ''} />
+              </button>
+            </div>
+            <p className="ai-summary-text">
+              {aiSummary.loading && !aiSummary.summary ? (
+                <span className="ai-loading-pulse">Generating executive summary...</span>
+              ) : (
+                aiSummary.summary || 'Waiting for first data cycle...'
+              )}
+            </p>
+            <div className="summary-footer">
+              <span className="timestamp-label">
+                {aiSummary.timestamp ? `Generated ${timeAgo(aiSummary.timestamp)}` : 'Pending'}
+              </span>
+              {aiSummary.model && (
+                <span className={`model-badge ${aiSummary.fallback ? 'badge-fallback' : ''}`}>
+                  {aiSummary.fallback ? 'Fallback' : aiSummary.model}
+                </span>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Right Column: Goal & Health Indicators */}
@@ -179,64 +213,27 @@ const CommandCenter = ({ setActiveTab }) => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Bottom section: AI Analytics & Risks */}
-      <div className="cc-bottom-section">
-        {/* AI Command Summary */}
-        <div className="card ai-summary-card distilled-ai-card">
-          <div className="card-header-row">
-            <h2 className="card-title">
-              <Bot size={16} className="card-title-icon" /> AI Command Summary
-            </h2>
-            <button
-              className="refresh-btn"
-              onClick={refreshSummary}
-              disabled={aiSummary.loading}
-              title="Refresh AI Summary"
-            >
-              <RefreshCw size={14} className={aiSummary.loading ? 'spin' : ''} />
-            </button>
-          </div>
-          <p className="ai-summary-text">
-            {aiSummary.loading && !aiSummary.summary ? (
-              <span className="ai-loading-pulse">Generating executive summary...</span>
-            ) : (
-              aiSummary.summary || 'Waiting for first data cycle...'
-            )}
-          </p>
-          <div className="summary-footer">
-            <span className="timestamp-label">
-              {aiSummary.timestamp ? `Generated ${timeAgo(aiSummary.timestamp)}` : 'Pending'}
-            </span>
-            {aiSummary.model && (
-              <span className={`model-badge ${aiSummary.fallback ? 'badge-fallback' : ''}`}>
-                {aiSummary.fallback ? 'Fallback' : aiSummary.model}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Revenue Risks list */}
-        <div className="card distilled-risks-card">
-          <h2 className="card-title">Active Revenue Risks ({alerts.length})</h2>
-          <ul className="alert-list">
-            {alerts.slice(0, 4).map((alert, idx) => {
-              const IconComp = getAlertIcon(alert);
-              return (
-                <li key={idx} className="alert-item">
-                  <IconComp size={16} className={`alert-icon status-${alert.severity}`} />
-                  <span className="alert-item-text">{alert.text}</span>
+          {/* Revenue Risks list */}
+          <div className="card distilled-risks-card">
+            <h2 className="card-title">Active Revenue Risks ({alerts.length})</h2>
+            <ul className="alert-list">
+              {alerts.slice(0, 4).map((alert, idx) => {
+                const IconComp = getAlertIcon(alert);
+                return (
+                  <li key={idx} className="alert-item">
+                    <IconComp size={16} className={`alert-icon status-${alert.severity}`} />
+                    <span className="alert-item-text">{alert.text}</span>
+                  </li>
+                );
+              })}
+              {alerts.length === 0 && (
+                <li className="alert-item">
+                  <span style={{ color: 'var(--text-tertiary)' }}>No active alerts</span>
                 </li>
-              );
-            })}
-            {alerts.length === 0 && (
-              <li className="alert-item">
-                <span style={{ color: 'var(--text-tertiary)' }}>No active alerts</span>
-              </li>
-            )}
-          </ul>
+              )}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

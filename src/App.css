@@ -1990,3 +1990,574 @@
   color: var(--color-red);
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   DISTILLED FINANCIAL DETAILS STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.fd-top-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: var(--space-2xl);
+  align-items: start;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.fd-chart-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.fd-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-xl);
+}
+
+.fd-chart-balance {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.fd-chart-sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: var(--space-xs);
+}
+
+.fd-controls-row {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.fd-dropdown-container {
+  position: relative;
+}
+
+.fd-dropdown-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--surface-color);
+  color: var(--text-primary);
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.fd-dropdown-btn:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease-out;
+}
+
+.fd-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  min-width: 100px;
+  overflow: hidden;
+}
+
+.fd-dropdown-item {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.fd-dropdown-item:hover,
+.fd-dropdown-item.active {
+  background: var(--surface-hover);
+  color: var(--primary-color);
+}
+
+.fd-toggle-group {
+  display: flex;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 2px;
+  background: var(--surface-color);
+}
+
+.fd-toggle-btn {
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.fd-toggle-btn:active {
+  transform: scale(0.93);
+  transition: transform 0.1s ease-out;
+}
+
+.fd-toggle-btn.active {
+  background: var(--surface-hover);
+  color: var(--primary-color);
+}
+
+.fd-legend-row {
+  display: flex;
+  gap: var(--space-md);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.fd-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fd-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.fd-legend-dot.revenue {
+  background-color: #84cc16;
+}
+
+.fd-legend-dot.expenses {
+  background-color: #fb923c;
+}
+
+.fd-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  border-left: 1px solid var(--border-color);
+  padding-left: var(--space-2xl);
+  height: 100%;
+}
+
+.fd-sidebar-reset-btn {
+  background: transparent;
+  border: none;
+  color: var(--primary-color);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+  margin-top: -12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fd-sidebar-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+  font-weight: 500;
+}
+
+.fd-sidebar-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.fd-sidebar-trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.fd-bottom-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+.fd-cash-flow-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.fd-vendor-section {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-color);
+  padding-left: var(--space-2xl);
+}
+
+.fd-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-lg) 0;
+}
+
+.fd-vendor-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
+.fd-vendor-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.fd-vendor-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.fd-vendor-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.fd-vendor-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.fd-vendor-date {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.fd-vendor-amount {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.fd-vendor-status {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-top: 4px;
+}
+
+/* Tablet & Mobile overrides for Financial Details */
+@media (max-width: 1024px) {
+  .fd-top-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+  .fd-sidebar {
+    border-left: none;
+    padding-left: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--space-xl);
+  }
+  .fd-sidebar-item {
+    flex: 1;
+    min-width: 200px;
+  }
+  .fd-bottom-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+  .fd-vendor-section {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--space-xl);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DISTILLED PATIENT FEEDBACK STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.fb-executive-strip {
+  display: flex;
+  gap: var(--space-2xl);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.fb-strip-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  border-right: 1px solid var(--border-color);
+  padding-right: var(--space-2xl);
+}
+
+.fb-strip-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.fb-strip-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.fb-strip-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.fb-strip-value {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.fb-strip-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.fb-row-distilled {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--space-3xl);
+  margin-bottom: var(--space-2xl);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-2xl);
+  align-items: start;
+}
+
+.fb-ai-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.fb-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.fb-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fb-title-icon {
+  flex-shrink: 0;
+}
+
+.fb-title-icon.theme-primary {
+  color: var(--primary-color);
+}
+
+.fb-title-icon.theme-amber {
+  color: var(--color-amber);
+}
+
+.fb-ai-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-md) 0;
+}
+
+.fb-summary-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.fb-distribution-section {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-color);
+  padding-left: var(--space-3xl);
+}
+
+.fb-dept-breakdown-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: var(--space-lg) 0 var(--space-xs) 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.fb-mentions-section {
+  margin-bottom: var(--space-2xl);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-2xl);
+}
+
+.fb-mentions-header {
+  margin-bottom: var(--space-md);
+}
+
+.fb-reviews-section {
+  margin-bottom: var(--space-xl);
+}
+
+.fb-reviews-timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.fb-timeline-item {
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fb-timeline-item:first-child {
+  padding-top: 0;
+}
+
+.fb-timeline-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.fb-timeline-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fb-timeline-meta {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.fb-timeline-time {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-left: auto;
+}
+
+.fb-timeline-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Bottom section grid structure */
+.fb-bottom-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--space-3xl);
+  align-items: start;
+}
+
+.fb-mentions-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.fb-reviews-column {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-color);
+  padding-left: var(--space-3xl);
+}
+
+/* Tablet & Mobile overrides for Patient Feedback */
+@media (max-width: 1024px) {
+  .fb-executive-strip {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .fb-strip-item {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding-right: 0;
+    padding-bottom: var(--space-md);
+  }
+  .fb-strip-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .fb-row-distilled {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+  .fb-distribution-section {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--space-xl);
+  }
+  .fb-bottom-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+  .fb-reviews-column {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--space-xl);
+  }
+}
+
+
+
+
