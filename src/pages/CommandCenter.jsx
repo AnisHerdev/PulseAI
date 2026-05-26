@@ -65,6 +65,32 @@ const CommandCenter = ({ setActiveTab }) => {
     return () => clearInterval(id);
   }, []);
 
+// --- MOCK DATA ---
+const revenueByDeptData = [
+  { name: 'Cardiology', revenue: 240000 },
+  { name: 'Orthopedics', revenue: 190000 },
+  { name: 'Oncology', revenue: 150000 },
+  { name: 'Surgery', revenue: 110000 },
+  { name: 'Emergency', revenue: 80000 },
+];
+
+const payerMixData = [
+  { name: 'Private Insurance', value: 55, color: '#2563eb' },
+  { name: 'Self-Pay', value: 25, color: '#10b981' },
+  { name: 'Govt Scheme', value: 20, color: '#f59e0b' },
+];
+
+const correlationData = [
+  { day: 'Mon', occ: 82, rev: 800 },
+  { day: 'Tue', occ: 85, rev: 840 },
+  { day: 'Wed', occ: 88, rev: 860 },
+  { day: 'Thu', occ: 90, rev: 890 },
+  { day: 'Fri', occ: 92, rev: 810 }, // Divergence here
+  { day: 'Sat', occ: 90, rev: 780 },
+  { day: 'Sun', occ: 85, rev: 750 },
+];
+
+const CommandCenter = ({ setActiveTab }) => {
   return (
     <div className="content-wrapper">
       {/* Live indicator */}
@@ -110,7 +136,7 @@ const CommandCenter = ({ setActiveTab }) => {
           <div className="metric-number">{formatCurrency(d.patientDirectPayments.value)}</div>
           <p className="sub-label">{d.patientDirectPayments.percentOfInflow}% of total inflow</p>
         </div>
-        <div className="card">
+        <div className="card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('partners')}>
           <h2 className="card-title">Insurance / TPA</h2>
           <div className="metric-number">{formatCurrency(d.insuranceTPA.value)}</div>
           <p className="sub-label">{d.insuranceTPA.percentOfInflow}% of total inflow</p>
