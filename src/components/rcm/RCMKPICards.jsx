@@ -7,26 +7,22 @@ import { rcmKPIs } from '../../data/rcmMockData';
 const ICONS = { FileText, CheckCircle, Clock, XCircle, TrendingUp, DollarSign };
 
 const COLOR_MAP = {
-  blue:  { border: '#2563eb', bg: 'rgba(37,99,235,0.08)',  icon: '#2563eb' },
-  green: { border: '#10b981', bg: 'rgba(16,185,129,0.08)', icon: '#10b981' },
-  amber: { border: '#f59e0b', bg: 'rgba(245,158,11,0.08)', icon: '#f59e0b' },
-  red:   { border: '#ef4444', bg: 'rgba(239,68,68,0.08)',  icon: '#ef4444' },
+  blue:  { bg: 'var(--primary-color-bg)',  icon: 'var(--primary-color)' },
+  green: { bg: 'var(--color-green-bg)', icon: 'var(--color-green)' },
+  amber: { bg: 'var(--color-amber-bg)', icon: 'var(--color-amber)' },
+  red:   { bg: 'var(--color-red-bg)',  icon: 'var(--color-red)' },
 };
 
 export default function RCMKPICards() {
   return (
-    <div className="rcm-kpi-grid">
+    <div className="rcm-executive-strip">
       {rcmKPIs.map((kpi) => {
         const Icon = ICONS[kpi.icon];
         const c = COLOR_MAP[kpi.color];
         const TrendIcon = kpi.trendUp ? ArrowUpRight : ArrowDownRight;
         const trendColor = kpi.trendUp ? 'var(--color-green)' : 'var(--color-red)';
         return (
-          <div
-            key={kpi.id}
-            className="rcm-kpi-card"
-            style={{ borderColor: c.border }}
-          >
+          <div key={kpi.id} className="rcm-strip-item">
             <div className="rcm-kpi-top">
               <span className="rcm-kpi-label">{kpi.label}</span>
               <span className="rcm-kpi-icon-wrap" style={{ background: c.bg }}>

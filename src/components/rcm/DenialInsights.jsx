@@ -4,13 +4,13 @@ import {
 import { denialReasons, denialTrend, deptDenials } from '../../data/rcmMockData';
 import { AlertTriangle, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
-const STATUS_COLORS = { critical: '#ef4444', warning: '#f59e0b', normal: '#10b981' };
+
 
 export default function DenialInsights() {
   return (
-    <div className="rcm-denial-grid">
-      {/* Top denial reasons */}
-      <div className="card">
+    <div className="rcm-denial-distilled-grid">
+      {/* Top Denial Reasons Column */}
+      <div className="rcm-denial-col-reasons">
         <h2 className="card-title">Top Denial Reasons</h2>
         <div className="rcm-denial-reasons">
           {denialReasons.map((r, i) => (
@@ -22,7 +22,7 @@ export default function DenialInsights() {
               <div className="rcm-denial-bar-bg">
                 <div
                   className="rcm-denial-bar-fill"
-                  style={{ width: `${r.pct}%`, background: i < 2 ? '#ef4444' : i < 4 ? '#f59e0b' : '#6b7280' }}
+                  style={{ width: `${r.pct}%`, background: i < 2 ? 'var(--color-red)' : i < 4 ? 'var(--color-amber)' : 'var(--text-tertiary)' }}
                 />
               </div>
               <span className="rcm-denial-pct">{r.pct}%</span>
@@ -31,16 +31,16 @@ export default function DenialInsights() {
         </div>
       </div>
 
-      {/* Denial trend */}
-      <div className="card">
+      {/* Denial Trend Column */}
+      <div className="rcm-denial-col-trend">
         <h2 className="card-title">Denial Trend (8 Weeks)</h2>
         <div style={{ width: '100%', height: 200 }}>
           <ResponsiveContainer>
             <AreaChart data={denialTrend} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="denialGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#ef4444" stopOpacity={0} />
+                  <stop offset="5%" stopColor="var(--color-red)" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="var(--color-red)" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
@@ -49,9 +49,9 @@ export default function DenialInsights() {
               <Tooltip
                 contentStyle={{ background: 'var(--surface-color)', border: '1px solid var(--border-color)', borderRadius: 8 }}
                 labelStyle={{ color: 'var(--text-primary)' }}
-                itemStyle={{ color: '#ef4444' }}
+                itemStyle={{ color: 'var(--color-red)' }}
               />
-              <Area type="monotone" dataKey="denials" stroke="#ef4444" strokeWidth={2} fill="url(#denialGrad)" name="Denials" />
+              <Area type="monotone" dataKey="denials" stroke="var(--color-red)" strokeWidth={2} fill="url(#denialGrad)" name="Denials" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
@@ -60,8 +60,8 @@ export default function DenialInsights() {
         </p>
       </div>
 
-      {/* Dept-wise denial table */}
-      <div className="card">
+      {/* Dept-wise Denial Column */}
+      <div className="rcm-denial-col-table">
         <h2 className="card-title">Dept-wise Denial Analysis</h2>
         <table className="rcm-table">
           <thead>
@@ -77,7 +77,8 @@ export default function DenialInsights() {
               const isUp = d.change.startsWith('+');
               const isFlat = d.change === '0%';
               const TIcon = isFlat ? Minus : isUp ? TrendingUp : TrendingDown;
-              const tColor = isFlat ? 'var(--text-secondary)' : isUp ? '#ef4444' : '#10b981';
+              const tColor = isFlat ? 'var(--text-secondary)' : isUp ? 'var(--color-red)' : 'var(--color-green)';
+              const badgeClass = d.status === 'critical' ? 'badge-critical' : d.status === 'warning' ? 'badge-warning' : 'badge-normal';
               return (
                 <tr key={d.dept}>
                   <td>{d.dept}</td>
@@ -88,14 +89,7 @@ export default function DenialInsights() {
                     </span>
                   </td>
                   <td>
-                    <span
-                      className="rcm-status-badge"
-                      style={{
-                        background: `${STATUS_COLORS[d.status]}22`,
-                        color: STATUS_COLORS[d.status],
-                        borderColor: `${STATUS_COLORS[d.status]}44`,
-                      }}
-                    >
+                    <span className={`rcm-status-badge ${badgeClass}`}>
                       {d.status.charAt(0).toUpperCase() + d.status.slice(1)}
                     </span>
                   </td>

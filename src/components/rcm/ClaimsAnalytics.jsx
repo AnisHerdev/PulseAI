@@ -14,11 +14,17 @@ const CustomTooltip = ({ active, payload }) => {
   );
 };
 
+const DONUT_COLORS = {
+  'Approved': 'var(--color-green)',
+  'Pending': 'var(--color-amber)',
+  'Rejected': 'var(--color-red)',
+};
+
 export default function ClaimsAnalytics() {
   return (
-    <div className="rcm-claims-grid">
-      {/* Donut */}
-      <div className="card">
+    <div className="rcm-claims-distilled-grid">
+      {/* Donut Column */}
+      <div className="rcm-claims-col-donut">
         <h2 className="card-title">Claim Status Distribution</h2>
         <div style={{ width: '100%', height: 180 }}>
           <ResponsiveContainer>
@@ -32,7 +38,7 @@ export default function ClaimsAnalytics() {
                 stroke="none"
               >
                 {claimStatusDonut.map((entry, i) => (
-                  <Cell key={i} fill={entry.color} />
+                  <Cell key={i} fill={DONUT_COLORS[entry.name] || entry.color} />
                 ))}
               </Pie>
               <Tooltip content={<CustomTooltip />} />
@@ -40,18 +46,21 @@ export default function ClaimsAnalytics() {
           </ResponsiveContainer>
         </div>
         <div className="rcm-donut-legend">
-          {claimStatusDonut.map((d) => (
-            <div key={d.name} className="rcm-legend-item">
-              <span className="rcm-legend-dot" style={{ background: d.color }} />
-              <span>{d.name}</span>
-              <strong style={{ color: d.color }}>{d.value}%</strong>
-            </div>
-          ))}
+          {claimStatusDonut.map((d) => {
+            const col = DONUT_COLORS[d.name] || d.color;
+            return (
+              <div key={d.name} className="rcm-legend-item">
+                <span className="rcm-legend-dot" style={{ background: col }} />
+                <span>{d.name}</span>
+                <strong style={{ color: col }}>{d.value}%</strong>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Bar chart */}
-      <div className="card">
+      {/* Bar Chart Column */}
+      <div className="rcm-claims-col-trend">
         <h2 className="card-title">Approval vs Rejection Trend (7M)</h2>
         <div style={{ width: '100%', height: 220 }}>
           <ResponsiveContainer>
@@ -66,19 +75,19 @@ export default function ClaimsAnalytics() {
                 formatter={(v) => `${v}%`}
               />
               <Legend wrapperStyle={{ fontSize: 12, color: 'var(--text-secondary)' }} />
-              <Bar dataKey="approved" name="Approved %" fill="#10b981" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="rejected" name="Rejected %" fill="#ef4444" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="approved" name="Approved %" fill="var(--color-green)" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="rejected" name="Rejected %" fill="var(--color-red)" radius={[3, 3, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      {/* Avg approval time */}
-      <div className="card rcm-approval-time-card">
+      {/* Avg Approval Time Column */}
+      <div className="rcm-claims-col-time">
         <h2 className="card-title">Avg Approval Time</h2>
         <div className="rcm-approval-time-body">
           <div className="rcm-approval-icon-wrap">
-            <Timer size={28} style={{ color: '#f59e0b' }} />
+            <Timer size={28} style={{ color: 'var(--color-amber)' }} />
           </div>
           <div className="rcm-approval-value">7.8 <span>days</span></div>
           <p className="sub-label" style={{ color: 'var(--color-amber)' }}>Target: ≤ 7 days</p>
@@ -92,7 +101,7 @@ export default function ClaimsAnalytics() {
           ].map((p) => (
             <div key={p.name} className="rcm-payer-row">
               <span>{p.name}</span>
-              <span className={`status-${p.status}`}>{p.days}d</span>
+              <strong className={`status-${p.status}`}>{p.days}d</strong>
             </div>
           ))}
         </div>

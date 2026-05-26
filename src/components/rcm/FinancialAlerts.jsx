@@ -9,7 +9,7 @@ const SEV_CONFIG = {
 
 export default function FinancialAlerts() {
   return (
-    <div className="card rcm-alerts-card">
+    <div className="rcm-alerts-section">
       <div className="rcm-alerts-header">
         <h2 className="card-title" style={{ margin: 0 }}>Financial Alerts</h2>
         <div className="rcm-alerts-counts">

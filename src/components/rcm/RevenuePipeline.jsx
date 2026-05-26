@@ -4,8 +4,7 @@ import { ChevronRight } from 'lucide-react';
 
 export default function RevenuePipeline() {
   return (
-    <div className="card rcm-pipeline-card">
-      <h2 className="card-title">Revenue Cycle Pipeline</h2>
+    <div className="rcm-pipeline-section">
       <div className="rcm-pipeline-row">
         {pipelineStages.map((stage, i) => (
           <React.Fragment key={stage.id}>

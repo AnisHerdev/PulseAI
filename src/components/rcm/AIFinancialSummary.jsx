@@ -7,7 +7,7 @@ export default function AIFinancialSummary() {
       {/* Header */}
       <div className="rcm-ai-header">
         <div className="rcm-ai-icon-wrap">
-          <Sparkles size={20} style={{ color: '#818cf8' }} />
+          <Sparkles size={20} style={{ color: 'var(--primary-color)' }} />
         </div>
         <div>
           <div className="rcm-ai-badge">AI Executive Summary</div>
@@ -22,12 +22,12 @@ export default function AIFinancialSummary() {
         {/* Insights */}
         <div className="rcm-ai-section">
           <div className="rcm-ai-section-title">
-            <Zap size={14} style={{ color: '#818cf8' }} /> Key Insights
+            <Zap size={14} style={{ color: 'var(--primary-color)' }} /> Key Insights
           </div>
           <ul className="rcm-ai-insights">
             {aiSummary.insights.map((ins, i) => (
               <li key={i} className="rcm-ai-insight-item">
-                <ChevronRight size={13} style={{ color: '#818cf8', flexShrink: 0, marginTop: 2 }} />
+                <ChevronRight size={13} style={{ color: 'var(--primary-color)', flexShrink: 0, marginTop: 2 }} />
                 <span>{ins}</span>
               </li>
             ))}
@@ -37,7 +37,7 @@ export default function AIFinancialSummary() {
         {/* Actions */}
         <div className="rcm-ai-section rcm-ai-actions-section">
           <div className="rcm-ai-section-title">
-            <Zap size={14} style={{ color: '#f59e0b' }} /> Recommended Actions
+            <Zap size={14} style={{ color: 'var(--color-amber)' }} /> Recommended Actions
           </div>
           <div className="rcm-ai-actions">
             {aiSummary.actions.map((action, i) => (
