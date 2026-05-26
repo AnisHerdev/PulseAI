@@ -2,81 +2,128 @@
 import { 
   ArrowDownRight, 
   AlertCircle, 
-  Activity 
+  Activity,
+  BedDouble,
+  Users
 } from 'lucide-react';
 
 const KPIOverview = () => {
   return (
     <div className="content-wrapper">
-      <div className="kpi-section">
-        <h3 className="kpi-section-title">Bed Utilization</h3>
-        <div className="kpi-grid">
-          <div className="card">
-            <h2 className="card-title">Bed Occupancy Rate</h2>
-            <div className="metric-number status-green">82%</div>
-            <p className="sub-label">Target: 80-85%</p>
+      <div className="kpi-section-distilled">
+        <h3 className="kpi-section-title">
+          <span className="kpi-section-icon-wrapper theme-primary">
+            <BedDouble size={16} />
+          </span>
+          Bed Utilization
+        </h3>
+        <div className="kpi-strip">
+          <div className="kpi-strip-item">
+            <span className="kpi-strip-label">Bed Occupancy Rate</span>
+            <div className="kpi-strip-number status-green">82%</div>
+            <div className="kpi-progress-bar" aria-hidden="true">
+              <div className="kpi-progress-fill status-green" style={{ width: '82%' }}></div>
+            </div>
+            <p className="kpi-strip-sub">
+              <span className="kpi-badge status-green">Target: 80-85%</span>
+            </p>
           </div>
-          <div className="card">
-            <h2 className="card-title">Average Length of Stay</h2>
-            <div className="metric-number">4.2 <span style={{fontSize: '16px'}}>days</span></div>
-            <p className="sub-label status-green"><ArrowDownRight size={14}/> 0.3 days vs last month</p>
+          <div className="kpi-strip-item">
+            <span className="kpi-strip-label">Average Length of Stay</span>
+            <div className="kpi-strip-number">4.2 <span className="kpi-strip-unit">days</span></div>
+            <p className="kpi-strip-sub">
+              <span className="kpi-badge status-green">
+                <ArrowDownRight size={14}/> 0.3 days vs last month
+              </span>
+            </p>
           </div>
-          <div className="card">
-            <h2 className="card-title">Room Turnaround Time</h2>
-            <div className="metric-number status-amber">48 <span style={{fontSize: '16px'}}>mins</span></div>
-            <p className="sub-label status-amber">Target: &lt;45 mins</p>
+          <div className="kpi-strip-item">
+            <span className="kpi-strip-label">Room Turnaround Time</span>
+            <div className="kpi-strip-number status-amber">48 <span className="kpi-strip-unit">mins</span></div>
+            <p className="kpi-strip-sub">
+              <span className="kpi-badge status-amber">Target: &lt;45 mins</span>
+            </p>
           </div>
-          <div className="card">
-            <h2 className="card-title">Bed Turnover Rate</h2>
-            <div className="metric-number">6.8</div>
-            <p className="sub-label">Patients per bed per month</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="kpi-section">
-        <h3 className="kpi-section-title">Operational & Flow Metrics</h3>
-        <div className="kpi-grid">
-          <div className="card">
-            <h2 className="card-title">OR Utilization</h2>
-            <div className="metric-number status-green">76%</div>
-            <p className="sub-label">Target: &gt;75%</p>
-          </div>
-          <div className="card">
-            <h2 className="card-title">ER Wait Time</h2>
-            <div className="metric-number status-red">34 <span style={{fontSize: '16px'}}>mins</span></div>
-            <p className="sub-label status-red"><AlertCircle size={14}/> Target: &lt;30 mins</p>
-          </div>
-          <div className="card">
-            <h2 className="card-title">Discharge Efficiency</h2>
-            <div className="metric-number">2.5 <span style={{fontSize: '16px'}}>hrs</span></div>
-            <p className="sub-label">Approval to exit</p>
-          </div>
-          <div className="card">
-            <h2 className="card-title">Equipment Utilization (MRI)</h2>
-            <div className="metric-number status-green">88%</div>
-            <p className="sub-label">Healthy volume</p>
+          <div className="kpi-strip-item">
+            <span className="kpi-strip-label">Bed Turnover Rate</span>
+            <div className="kpi-strip-number">6.8</div>
+            <p className="kpi-strip-sub">Patients per bed per month</p>
           </div>
         </div>
       </div>
 
-      <div className="kpi-section">
-        <h3 className="kpi-section-title">Staffing Ratios</h3>
-        <div className="kpi-grid">
-          <div className="card">
-            <h2 className="card-title">Nurse to Patient (ICU)</h2>
-            <div className="metric-number status-green">1:2</div>
-            <p className="sub-label">Compliant</p>
+      <div className="kpi-section-distilled">
+        <h3 className="kpi-section-title">
+          <span className="kpi-section-icon-wrapper theme-green">
+            <Activity size={16} />
+          </span>
+          Operational & Flow Metrics
+        </h3>
+        <div className="kpi-strip">
+          <div className="kpi-strip-item">
+            <span className="kpi-strip-label">OR Utilization</span>
+            <div className="kpi-strip-number status-green">76%</div>
+            <div className="kpi-progress-bar" aria-hidden="true">
+              <div className="kpi-progress-fill status-green" style={{ width: '76%' }}></div>
+            </div>
+            <p className="kpi-strip-sub">
+              <span className="kpi-badge status-green">Target: &gt;75%</span>
+            </p>
           </div>
-          <div className="card">
-            <h2 className="card-title">Nurse to Patient (Gen)</h2>
-            <div className="metric-number status-amber">1:7</div>
-            <p className="sub-label status-amber">Target: 1:6</p>
+          <div className="kpi-strip-item">
+            <span className="kpi-strip-label">ER Wait Time</span>
+            <div className="kpi-strip-number status-red">34 <span className="kpi-strip-unit">mins</span></div>
+            <p className="kpi-strip-sub">
+              <span className="kpi-badge status-red">
+                <AlertCircle size={14}/> Target: &lt;30 mins
+              </span>
+            </p>
           </div>
-          <div className="card">
-            <h2 className="card-title">Staff Utilization Rate</h2>
-            <div className="metric-number">84%</div>
-            <p className="sub-label">Billable vs idle time</p>
+          <div className="kpi-strip-item">
+            <span className="kpi-strip-label">Discharge Efficiency</span>
+            <div className="kpi-strip-number">2.5 <span className="kpi-strip-unit">hrs</span></div>
+            <p className="kpi-strip-sub">Approval to exit</p>
+          </div>
+          <div className="kpi-strip-item">
+            <span className="kpi-strip-label">Equipment Utilization (MRI)</span>
+            <div className="kpi-strip-number status-green">88%</div>
+            <div className="kpi-progress-bar" aria-hidden="true">
+              <div className="kpi-progress-fill status-green" style={{ width: '88%' }}></div>
+            </div>
+            <p className="kpi-strip-sub">Healthy volume</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="kpi-section-distilled" style={{ borderBottom: 'none' }}>
+        <h3 className="kpi-section-title">
+          <span className="kpi-section-icon-wrapper theme-amber">
+            <Users size={16} />
+          </span>
+          Staffing Ratios
+        </h3>
+        <div className="kpi-strip">
+          <div className="kpi-strip-item">
+            <span className="kpi-strip-label">Nurse to Patient (ICU)</span>
+            <div className="kpi-strip-number status-green">1:2</div>
+            <p className="kpi-strip-sub">
+              <span className="kpi-badge status-green">Compliant</span>
+            </p>
+          </div>
+          <div className="kpi-strip-item">
+            <span className="kpi-strip-label">Nurse to Patient (Gen)</span>
+            <div className="kpi-strip-number status-amber">1:7</div>
+            <p className="kpi-strip-sub">
+              <span className="kpi-badge status-amber">Target: 1:6</span>
+            </p>
+          </div>
+          <div className="kpi-strip-item">
+            <span className="kpi-strip-label">Staff Utilization Rate</span>
+            <div className="kpi-strip-number">84%</div>
+            <div className="kpi-progress-bar" aria-hidden="true">
+              <div className="kpi-progress-fill status-primary" style={{ width: '84%' }}></div>
+            </div>
+            <p className="kpi-strip-sub">Billable vs idle time</p>
           </div>
         </div>
       </div>

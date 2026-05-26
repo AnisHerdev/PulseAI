@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Sun, Moon } from 'lucide-react';
 import './App.css';
 
 // --- DYNAMIC PAGE REGISTRATION ---
@@ -52,6 +53,21 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
 // --- MAIN APP COMPONENT ---
 function App() {
   const [activeTab, setActiveTab] = useState(defaultTab);
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved;
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return systemDark ? 'dark' : 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   const activePage = pages.find((p) => p.id === activeTab) || pages[0];
   const ActiveComponent = activePage ? activePage.component : null;
@@ -64,6 +80,13 @@ function App() {
       <main className="main-content">
         <header className="top-header">
           <h2 className="header-title">{activeTitle}</h2>
+          <button 
+            className="theme-toggle-btn" 
+            onClick={toggleTheme} 
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+          >
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          </button>
         </header>
         
         {ActiveComponent ? (
