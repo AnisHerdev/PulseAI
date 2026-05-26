@@ -47,7 +47,7 @@ const correlationData = [
   { day: 'Sun', occ: 85, rev: 750 },
 ];
 
-const CommandCenter = () => {
+const CommandCenter = ({ setActiveTab }) => {
   return (
     <div className="content-wrapper">
       {/* ROW 1: P&L Strip */}
@@ -82,7 +82,7 @@ const CommandCenter = () => {
           <div className="metric-number">$185,944</div>
           <p className="sub-label">22% of total inflow</p>
         </div>
-        <div className="card">
+        <div className="card" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('partners')}>
           <h2 className="card-title">Insurance / TPA</h2>
           <div className="metric-number">$659,256</div>
           <p className="sub-label">78% of total inflow</p>
