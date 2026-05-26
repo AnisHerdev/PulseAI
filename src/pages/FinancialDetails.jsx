@@ -13,7 +13,7 @@ import {
   LineChart,
   Line
 } from 'recharts';
-import { FINANCIAL_DATA_7D, FINANCIAL_DATA_30D } from '../utils/constants';
+import { FINANCIAL_DATA_7D, FINANCIAL_DATA_30D, CASH_FLOW_PROJECTION } from '../utils/constants';
 
 const COLORS = {
   revenue: '#84cc16',
@@ -365,18 +365,15 @@ const FinancialDetails = () => {
           <h2 className="card-title" style={{ marginBottom: '24px' }}>Cash Flow Projection (30 Days)</h2>
           <div style={{ width: '100%', height: 300 }}>
             <ResponsiveContainer>
-              <LineChart data={[
-                { day: '1', amount: 12000 }, { day: '5', amount: 12500 }, { day: '10', amount: 11000 },
-                { day: '15', amount: 14000 }, { day: '20', amount: 13500 }, { day: '25', amount: 16000 },
-                { day: '30', amount: 18000 }
-              ]} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+              <LineChart data={CASH_FLOW_PROJECTION} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                 <CartesianGrid vertical={false} stroke="var(--border-color)" strokeDasharray="3 3" />
-                <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fill: 'var(--text-tertiary)', fontSize: 12 }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fill: 'var(--text-tertiary)', fontSize: 12 }} tickFormatter={(val) => "$" + (val/1000) + "k"} />
+                <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: 'var(--text-tertiary)', fontSize: 11 }} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fill: 'var(--text-tertiary)', fontSize: 11 }} tickFormatter={(val) => "$" + (val/1000000).toFixed(1) + "M"} />
                 <Tooltip 
                   contentStyle={{ backgroundColor: 'var(--surface-color)', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
                   itemStyle={{ color: 'var(--text-primary)' }}
-                  formatter={(value) => ["$" + value.toLocaleString(), 'Projected Cash']}
+                  formatter={(value) => ["$" + value.toLocaleString(), 'Projected Reserves']}
+                  labelFormatter={(value, items) => items[0]?.payload.fullDate || value}
                   labelStyle={{ color: 'var(--text-secondary)' }}
                 />
                 <Line type="monotone" dataKey="amount" stroke="var(--primary-color)" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: 'var(--surface-color)' }} activeDot={{ r: 6, strokeWidth: 0, fill: 'var(--primary-hover)' }} />

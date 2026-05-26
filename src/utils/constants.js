@@ -77,3 +77,13 @@ export const FINANCIAL_DATA_30D = [
   { day: '25 May', revenue: 8200, savings: 2300, expenses: -5900, fullDate: 'Monday, 25 May 2026' },
   { day: '26 May', revenue: 8452, savings: 2328, expenses: -6124, fullDate: 'Tuesday, 26 May 2026' }, // Today
 ];
+
+export const CASH_FLOW_PROJECTION = [
+  { date: '27 May', amount: 12000000, fullDate: 'Wednesday, 27 May 2026 (Projected)' },
+  { date: '31 May', amount: 12500000, fullDate: 'Sunday, 31 May 2026 (Projected)' },
+  { date: '05 Jun', amount: 12200000, fullDate: 'Friday, 5 Jun 2026 (Projected)' },
+  { date: '10 Jun', amount: 13800000, fullDate: 'Wednesday, 10 Jun 2026 (Projected)' },
+  { date: '15 Jun', amount: 14100000, fullDate: 'Monday, 15 Jun 2026 (Projected)' },
+  { date: '20 Jun', amount: 14900000, fullDate: 'Saturday, 20 Jun 2026 (Projected)' },
+  { date: '25 Jun', amount: 15600000, fullDate: 'Thursday, 25 Jun 2026 (Projected)' },
+];
