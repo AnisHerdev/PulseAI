@@ -66,7 +66,7 @@ function App() {
         </header>
         
         {ActiveComponent ? (
-          <ActiveComponent />
+          <ActiveComponent setActiveTab={setActiveTab} />
         ) : (
           <div className="content-wrapper">
             <div className="card">

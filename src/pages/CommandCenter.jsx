@@ -47,26 +47,26 @@ const correlationData = [
   { day: 'Sun', occ: 85, rev: 750 },
 ];
 
-const CommandCenter = () => {
+const CommandCenter = ({ setActiveTab }) => {
   return (
     <div className="content-wrapper">
       {/* ROW 1: P&L Strip */}
       <div className="row-1-grid">
-        <div className="card">
+        <div className="card clickable-card" onClick={() => setActiveTab('financial-details')}>
           <h2 className="card-title">Today's Revenue</h2>
           <div className="hero-number">$845,200</div>
           <p className="sub-label status-green">
             <ArrowUpRight size={16} /> +5.2% vs same day last week
           </p>
         </div>
-        <div className="card">
+        <div className="card clickable-card" onClick={() => setActiveTab('financial-details')}>
           <h2 className="card-title">Today's Expenses</h2>
           <div className="hero-number">$612,400</div>
           <p className="sub-label status-amber">
             <Clock size={16} /> Estimated (Staffing + Consumables)
           </p>
         </div>
-        <div className="card">
+        <div className="card clickable-card" onClick={() => setActiveTab('financial-details')}>
           <h2 className="card-title">Net P&L Today</h2>
           <div className="hero-number status-green">+$232,800</div>
           <p className="sub-label status-green">
