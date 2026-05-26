@@ -13,7 +13,6 @@ import {
   TrendingDown,
   DollarSign
 } from 'lucide-react';
-import RCMPage from './components/rcm/RCMPage';
 import { 
   BarChart, 
   Bar, 
@@ -94,10 +93,9 @@ function App() {
           <h2 className="header-title">{activeTitle}</h2>
         </header>
         
-        {activeTab === 'rcm' && <RCMPage />}
-
-        {/* Placeholder for other tabs */}
-        {['partners', 'reports'].includes(activeTab) && (
+        {ActiveComponent ? (
+          <ActiveComponent setActiveTab={setActiveTab} />
+        ) : (
           <div className="content-wrapper">
             <div className="card">
               <p style={{ color: 'var(--text-secondary)' }}>No pages found.</p>
