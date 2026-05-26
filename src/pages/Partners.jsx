@@ -15,96 +15,110 @@ const Partners = ({ setActiveTab }) => {
     {
       id: 1,
       type: 'Insurance / TPA',
-      examples: ['Star Health', 'MediAssist'],
       status: 'active',
       count: 12,
       integrationHealth: 98,
       uptime: '99.9%',
       lastSync: '2 mins ago',
-      description: 'Third-party administrators and insurance providers for claims and coverage management'
+      partners: [
+        { name: 'Star Health', approvals: 2450, denials: 52, approvalRate: 97.9 },
+        { name: 'MediAssist', approvals: 1800, denials: 37, approvalRate: 97.9 }
+      ]
     },
     {
       id: 2,
       type: 'Labs',
-      examples: ['Thyrocare', 'Metropolis'],
       status: 'active',
       count: 8,
       integrationHealth: 95,
       uptime: '99.8%',
       lastSync: '5 mins ago',
-      description: 'Laboratory networks for test processing and results management'
+      partners: [
+        { name: 'Thyrocare', approvals: 1045, denials: 12, approvalRate: 98.9 },
+        { name: 'Metropolis', approvals: 800, denials: 11, approvalRate: 98.6 }
+      ]
     },
     {
       id: 3,
       type: 'Pharmacy Suppliers',
-      examples: ['Apollo Pharma'],
       status: 'active',
       count: 5,
       integrationHealth: 96,
       uptime: '99.9%',
       lastSync: '1 min ago',
-      description: 'Pharmaceutical suppliers for medication ordering and inventory management'
+      partners: [
+        { name: 'Apollo Pharma', approvals: 892, denials: 12, approvalRate: 98.7 }
+      ]
     },
     {
       id: 4,
       type: 'Ambulance Services',
-      examples: ['Emergency vendors'],
       status: 'active',
       count: 6,
       integrationHealth: 92,
       uptime: '99.7%',
       lastSync: '10 mins ago',
-      description: 'Emergency transport and ambulance service providers'
+      partners: [
+        { name: 'Emergency Vendor A', approvals: 256, denials: 18, approvalRate: 93.4 },
+        { name: 'Emergency Vendor B', approvals: 200, denials: 16, approvalRate: 92.6 }
+      ]
     },
     {
       id: 5,
       type: 'Diagnostic Centers',
-      examples: ['MRI/CT scan vendors'],
       status: 'active',
       count: 9,
       integrationHealth: 97,
       uptime: '99.9%',
       lastSync: '3 mins ago',
-      description: 'Advanced diagnostic imaging centers and facilities'
+      partners: [
+        { name: 'MRI/CT Scan Center 1', approvals: 1200, denials: 25, approvalRate: 97.9 },
+        { name: 'MRI/CT Scan Center 2', approvals: 934, denials: 20, approvalRate: 97.9 }
+      ]
     },
     {
       id: 6,
       type: 'Equipment Vendors',
-      examples: ['Siemens', 'GE Healthcare'],
       status: 'active',
       count: 7,
       integrationHealth: 94,
       uptime: '99.6%',
       lastSync: '15 mins ago',
-      description: 'Medical equipment manufacturers and suppliers'
+      partners: [
+        { name: 'Siemens', approvals: 345, denials: 38, approvalRate: 90.1 },
+        { name: 'GE Healthcare', approvals: 222, denials: 18, approvalRate: 92.5 }
+      ]
     },
     {
       id: 7,
       type: 'Blood Banks',
-      examples: ['External blood suppliers'],
       status: 'active',
       count: 4,
       integrationHealth: 99,
       uptime: '100%',
       lastSync: '1 min ago',
-      description: 'Blood storage and transfusion service providers'
+      partners: [
+        { name: 'Central Blood Bank', approvals: 789, denials: 5, approvalRate: 99.4 }
+      ]
     },
     {
       id: 8,
       type: 'Telemedicine Providers',
-      examples: ['Online consultation partners'],
       status: 'active',
       count: 3,
       integrationHealth: 93,
       uptime: '99.5%',
       lastSync: '8 mins ago',
-      description: 'Remote consultation and telehealth service platforms'
+      partners: [
+        { name: 'Online Consult Partner 1', approvals: 389, denials: 15, approvalRate: 96.3 },
+        { name: 'Online Consult Partner 2', approvals: 234, denials: 13, approvalRate: 94.7 }
+      ]
     }
   ];
 
   const filteredPartners = partnersData.filter(partner => {
     const matchesSearch = partner.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         partner.examples.some(ex => ex.toLowerCase().includes(searchTerm.toLowerCase()));
+                         partner.partners.some(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesFilter = filterStatus === 'all' || partner.status === filterStatus;
     return matchesSearch && matchesFilter;
   });
@@ -279,37 +293,39 @@ const Partners = ({ setActiveTab }) => {
 
                 {expandedPartner === partner.id && (
                   <div style={{ padding: '16px', borderTop: '1px solid var(--border-color)', background: 'var(--bg-tertiary)' }}>
-                    <div style={{ marginBottom: '16px' }}>
-                      <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '8px', textTransform: 'uppercase' }}>
-                        Description
-                      </div>
-                      <div style={{ fontSize: '14px', color: 'var(--text-primary)' }}>
-                        {partner.description}
-                      </div>
+                    <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '12px', textTransform: 'uppercase' }}>
+                      Individual Partner Performance
                     </div>
-
-                    <div>
-                      <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '8px', textTransform: 'uppercase' }}>
-                        Partner Examples
-                      </div>
-                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                        {partner.examples.map((example, idx) => (
-                          <span
-                            key={idx}
-                            style={{
-                              display: 'inline-block',
-                              background: 'var(--bg-secondary)',
-                              padding: '6px 12px',
-                              borderRadius: '6px',
-                              fontSize: '13px',
-                              color: 'var(--text-primary)',
-                              border: '1px solid var(--border-color)'
-                            }}
-                          >
-                            {example}
-                          </span>
-                        ))}
-                      </div>
+                    
+                    <div style={{ overflowX: 'auto' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+                        <thead>
+                          <tr style={{ borderBottom: '2px solid var(--border-color)' }}>
+                            <th style={{ textAlign: 'left', padding: '10px', color: 'var(--text-secondary)', fontWeight: 600, textTransform: 'uppercase' }}>Partner Name</th>
+                            <th style={{ textAlign: 'right', padding: '10px', color: 'var(--text-secondary)', fontWeight: 600, textTransform: 'uppercase' }}>Approvals</th>
+                            <th style={{ textAlign: 'right', padding: '10px', color: 'var(--text-secondary)', fontWeight: 600, textTransform: 'uppercase' }}>Denials</th>
+                            <th style={{ textAlign: 'right', padding: '10px', color: 'var(--text-secondary)', fontWeight: 600, textTransform: 'uppercase' }}>Approval Rate</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {partner.partners.map((p, idx) => (
+                            <tr key={idx} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                              <td style={{ textAlign: 'left', padding: '12px 10px', color: 'var(--text-primary)', fontWeight: 500 }}>
+                                {p.name}
+                              </td>
+                              <td style={{ textAlign: 'right', padding: '12px 10px', color: '#10b981', fontWeight: 600 }}>
+                                {p.approvals.toLocaleString()}
+                              </td>
+                              <td style={{ textAlign: 'right', padding: '12px 10px', color: '#ef4444', fontWeight: 600 }}>
+                                {p.denials}
+                              </td>
+                              <td style={{ textAlign: 'right', padding: '12px 10px', color: '#2563eb', fontWeight: 700 }}>
+                                {p.approvalRate}%
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 )}
