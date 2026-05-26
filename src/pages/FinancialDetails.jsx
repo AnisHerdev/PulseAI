@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Wallet, ChevronDown, BarChart2, TrendingUp, ArrowUpRight } from 'lucide-react';
+import { Wallet, ChevronDown, BarChart2, TrendingUp, ArrowUpRight, Calendar } from 'lucide-react';
 import { 
   BarChart, 
   Bar, 
@@ -64,18 +64,44 @@ const FinancialDetails = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [chartType, setChartType] = useState('bar');
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [selectedDayIndex, setSelectedDayIndex] = useState(-1);
 
   const activeData = timeframe === '7d' ? FINANCIAL_DATA_7D : FINANCIAL_DATA_30D;
 
-  // Dynamic summary calculations
-  const totalRevenue = activeData.reduce((sum, d) => sum + d.revenue, 0) * 100;
-  const totalExpenses = activeData.reduce((sum, d) => sum + Math.abs(d.expenses), 0) * 100;
+  const handleTimeframeChange = (val) => {
+    setTimeframe(val);
+    setSelectedDayIndex(-1);
+    setShowDropdown(false);
+  };
+
+  const isDaySelected = selectedDayIndex !== -1 && selectedDayIndex < activeData.length;
+
+  // Dynamic summary calculations based on timeframe total or selected day
+  const totalRevenue = isDaySelected 
+    ? activeData[selectedDayIndex].revenue * 100 
+    : activeData.reduce((sum, d) => sum + d.revenue, 0) * 100;
+
+  const totalExpenses = isDaySelected 
+    ? Math.abs(activeData[selectedDayIndex].expenses) * 100 
+    : activeData.reduce((sum, d) => sum + Math.abs(d.expenses), 0) * 100;
+
   const savedBalance = totalRevenue - totalExpenses;
 
-  // Performance ratios vs previous period
+  // Performance ratios vs previous period, or selected date label
+  const revenueLabel = isDaySelected ? "Day Revenue" : "Total Revenue";
+  const expensesLabel = isDaySelected ? "Day Expenses" : "Total Expenses";
+  const netLabel = isDaySelected ? "Day Net Profit" : "Net Profit";
+
   const revenueDiff = timeframe === '7d' ? '+5.1% vs prev 7 days' : '+4.8% vs prev 30 days';
   const expensesDiff = timeframe === '7d' ? '+15.5% vs prev 7 days' : '+12.2% vs prev 30 days';
   const netDiff = timeframe === '7d' ? '+20.7% vs prev 7 days' : '+18.5% vs prev 30 days';
+
+  const revenueDiffText = isDaySelected ? activeData[selectedDayIndex].fullDate : revenueDiff;
+  const expensesDiffText = isDaySelected ? activeData[selectedDayIndex].fullDate : expensesDiff;
+  const netDiffText = isDaySelected ? activeData[selectedDayIndex].fullDate : netDiff;
+
+  // Visual highlight: prioritize hover activeIndex, fallback to selectedDayIndex
+  const highlightIndex = activeIndex !== -1 ? activeIndex : selectedDayIndex;
 
   return (
     <div className="content-wrapper">
@@ -91,7 +117,9 @@ const FinancialDetails = () => {
                 ${savedBalance.toLocaleString()}
               </div>
               <div style={{ fontSize: '14px', color: 'var(--text-secondary)', marginTop: '8px' }}>
-                Net Balance ({timeframe === '7d' ? '7 Days' : '30 Days'})
+                {isDaySelected 
+                  ? `Selected Day Net Profit (${activeData[selectedDayIndex].day})` 
+                  : `Net Balance (${timeframe === '7d' ? '7 Days' : '30 Days'})`}
               </div>
             </div>
 
@@ -127,10 +155,7 @@ const FinancialDetails = () => {
                       overflow: 'hidden'
                     }}>
                       <button 
-                        onClick={() => {
-                          setTimeframe('7d');
-                          setShowDropdown(false);
-                        }}
+                        onClick={() => handleTimeframeChange('7d')}
                         style={{
                           width: '100%',
                           padding: '8px 12px',
@@ -146,10 +171,7 @@ const FinancialDetails = () => {
                         7 Days
                       </button>
                       <button 
-                        onClick={() => {
-                          setTimeframe('30d');
-                          setShowDropdown(false);
-                        }}
+                        onClick={() => handleTimeframeChange('30d')}
                         style={{
                           width: '100%',
                           padding: '8px 12px',
@@ -231,6 +253,12 @@ const FinancialDetails = () => {
                     }
                   }}
                   onMouseLeave={() => setActiveIndex(-1)}
+                  onClick={(state) => {
+                    if (state && state.activeTooltipIndex !== undefined) {
+                      setSelectedDayIndex(selectedDayIndex === state.activeTooltipIndex ? -1 : state.activeTooltipIndex);
+                    }
+                  }}
+                  style={{ cursor: 'pointer' }}
                 >
                   <CartesianGrid vertical={false} stroke="var(--border-color)" strokeDasharray="3 3" />
                   <XAxis 
@@ -254,7 +282,7 @@ const FinancialDetails = () => {
                       <Cell 
                         key={`cell-revenue-${index}`} 
                         fill={COLORS.revenue} 
-                        opacity={activeIndex === -1 || activeIndex === index ? 1 : 0.35}
+                        opacity={highlightIndex === -1 || highlightIndex === index ? 1 : 0.35}
                         style={{ transition: 'opacity 0.2s ease' }}
                       />
                     ))}
@@ -264,7 +292,7 @@ const FinancialDetails = () => {
                       <Cell 
                         key={`cell-expenses-${index}`} 
                         fill={COLORS.expenses}
-                        opacity={activeIndex === -1 || activeIndex === index ? 1 : 0.35}
+                        opacity={highlightIndex === -1 || highlightIndex === index ? 1 : 0.35}
                         style={{ transition: 'opacity 0.2s ease' }} 
                       />
                     ))}
@@ -277,9 +305,17 @@ const FinancialDetails = () => {
                   onMouseMove={(state) => {
                     if (state && state.activeTooltipIndex !== undefined) {
                       setActiveIndex(state.activeTooltipIndex);
+                    } else {
+                      setActiveIndex(-1);
                     }
                   }}
                   onMouseLeave={() => setActiveIndex(-1)}
+                  onClick={(state) => {
+                    if (state && state.activeTooltipIndex !== undefined) {
+                      setSelectedDayIndex(selectedDayIndex === state.activeTooltipIndex ? -1 : state.activeTooltipIndex);
+                    }
+                  }}
+                  style={{ cursor: 'pointer' }}
                 >
                   <CartesianGrid vertical={false} stroke="var(--border-color)" strokeDasharray="3 3" />
                   <XAxis 
@@ -321,41 +357,63 @@ const FinancialDetails = () => {
           </div>
         </div>
 
-        {/* Right Sidebar Stats - Linked dynamically to computed timeframe summaries */}
+        {/* Right Sidebar Stats - Linked dynamically to computed timeframe summaries or selected day */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', paddingTop: '16px' }}>
+          {isDaySelected && (
+            <button 
+              onClick={() => setSelectedDayIndex(-1)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: 'var(--primary-color)',
+                fontSize: '12px',
+                fontWeight: 600,
+                textAlign: 'left',
+                cursor: 'pointer',
+                padding: 0,
+                marginTop: '-8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}
+            >
+              ← Reset to totals
+            </button>
+          )}
+
           <div>
             <div style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', fontWeight: 500 }}>
-              Total Revenue
+              {revenueLabel}
             </div>
             <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px', lineHeight: 1 }}>
               ${totalRevenue.toLocaleString()}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '13px', color: 'var(--color-green)' }}>
-              <ArrowUpRight size={14} /> {revenueDiff}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '13px', color: isDaySelected ? 'var(--text-secondary)' : 'var(--color-green)' }}>
+              {isDaySelected ? <Calendar size={14} /> : <ArrowUpRight size={14} />} {revenueDiffText}
             </div>
           </div>
 
           <div>
             <div style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', fontWeight: 500 }}>
-              Total Expenses
+              {expensesLabel}
             </div>
             <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px', lineHeight: 1 }}>
               ${totalExpenses.toLocaleString()}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '13px', color: 'var(--color-amber)' }}>
-              <ArrowUpRight size={14} /> {expensesDiff}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '13px', color: isDaySelected ? 'var(--text-secondary)' : 'var(--color-amber)' }}>
+              {isDaySelected ? <Calendar size={14} /> : <ArrowUpRight size={14} />} {expensesDiffText}
             </div>
           </div>
 
           <div>
             <div style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', fontWeight: 500 }}>
-              Net Profit
+              {netLabel}
             </div>
             <div style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px', lineHeight: 1 }}>
               ${savedBalance.toLocaleString()}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '13px', color: 'var(--color-green)' }}>
-              <ArrowUpRight size={14} /> {netDiff}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '13px', color: isDaySelected ? 'var(--text-secondary)' : 'var(--color-green)' }}>
+              {isDaySelected ? <Calendar size={14} /> : <ArrowUpRight size={14} />} {netDiffText}
             </div>
           </div>
         </div>
