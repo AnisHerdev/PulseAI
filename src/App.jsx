@@ -1,31 +1,4 @@
-import React, { useState } from 'react';
-import { 
-  LayoutDashboard, 
-  Activity, 
-  RefreshCcw, 
-  Users, 
-  FileBarChart, 
-  ArrowUpRight, 
-  ArrowDownRight, 
-  AlertCircle, 
-  Clock, 
-  TrendingUp, 
-  TrendingDown,
-  DollarSign
-} from 'lucide-react';
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  Tooltip, 
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  LineChart,
-  Line
-} from 'recharts';
+import { useState } from 'react';
 import './App.css';
 
 // --- DYNAMIC PAGE REGISTRATION ---

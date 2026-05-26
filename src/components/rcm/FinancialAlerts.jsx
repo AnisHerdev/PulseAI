@@ -1,4 +1,3 @@
-import React from 'react';
 import { financialAlerts } from '../../data/rcmMockData';
 import { AlertTriangle, AlertCircle, CheckCircle } from 'lucide-react';
 

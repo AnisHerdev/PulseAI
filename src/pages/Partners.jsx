@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Users, ChevronDown, CheckCircle, AlertCircle, Clock } from 'lucide-react';
 
-const Partners = ({ setActiveTab }) => {
-  const [expandedPartner, setExpandedPartner] = useState(null);
+const Partners = () => {
+  const [expandedPartner, setExpandedPartner] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
-
-  // Auto-expand Insurance/TPA when navigating from CommandCenter
-  React.useEffect(() => {
-    setExpandedPartner(1);
-  }, []);
 
   const partnersData = [
     {

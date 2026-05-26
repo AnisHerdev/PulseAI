@@ -1,4 +1,3 @@
-import React from 'react';
 import RCMKPICards from './RCMKPICards';
 import RevenuePipeline from './RevenuePipeline';
 import ClaimsAnalytics from './ClaimsAnalytics';

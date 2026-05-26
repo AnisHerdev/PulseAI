@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   FileText, CheckCircle, Clock, XCircle, TrendingUp, DollarSign,
   ArrowUpRight, ArrowDownRight,

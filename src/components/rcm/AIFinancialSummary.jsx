@@ -1,4 +1,3 @@
-import React from 'react';
 import { aiSummary } from '../../data/rcmMockData';
 import { Sparkles, ChevronRight, Zap } from 'lucide-react';
 

@@ -90,7 +90,6 @@ const correlationData = [
   { day: 'Sun', occ: 85, rev: 750 },
 ];
 
-const CommandCenter = ({ setActiveTab }) => {
   return (
     <div className="content-wrapper">
       {/* Live indicator */}
